@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LambdaLib", "LambdaLib\LambdaLib.vcxproj", "{CECEE441-AE8F-41D6-9BFC-75E85AC585BE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Harness", "Harness\Harness.vcxproj", "{994266BB-2CAD-4F4E-9D16-688C359A8E0C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CECEE441-AE8F-41D6-9BFC-75E85AC585BE} = {CECEE441-AE8F-41D6-9BFC-75E85AC585BE}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CECEE441-AE8F-41D6-9BFC-75E85AC585BE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CECEE441-AE8F-41D6-9BFC-75E85AC585BE}.Debug|Win32.Build.0 = Debug|Win32
+		{CECEE441-AE8F-41D6-9BFC-75E85AC585BE}.Release|Win32.ActiveCfg = Release|Win32
+		{CECEE441-AE8F-41D6-9BFC-75E85AC585BE}.Release|Win32.Build.0 = Release|Win32
+		{994266BB-2CAD-4F4E-9D16-688C359A8E0C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{994266BB-2CAD-4F4E-9D16-688C359A8E0C}.Debug|Win32.Build.0 = Debug|Win32
+		{994266BB-2CAD-4F4E-9D16-688C359A8E0C}.Release|Win32.ActiveCfg = Release|Win32
+		{994266BB-2CAD-4F4E-9D16-688C359A8E0C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
