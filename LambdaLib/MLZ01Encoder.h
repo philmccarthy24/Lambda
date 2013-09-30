@@ -13,8 +13,6 @@ public:
 	virtual void CreateLambdaBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer, PBYTEBUF pLambdaEncoding) override;
 	virtual void ApplyLambdaToBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& lambdaBuffer, PBYTEBUF pModifiedBuffer) override;
 
-	// Operations on files
-	//...
 private:
 	bool FindSymbolInBuffer(const BYTEBUF& symbol, const BYTEBUF& originalBuffer, PULONG pFoundSymbolPosInOriginalBuf);
 };

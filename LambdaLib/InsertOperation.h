@@ -5,7 +5,7 @@ class CInsertOperation : public ILambdaOperation
 {
 public:
 	CInsertOperation(const BYTEBUF& dataToInsert);
-	CInsertOperation()
+	CInsertOperation();
 	virtual ~CInsertOperation(void);
 
 	virtual void Serialise(PBYTEBUF pLambdaBuffer) override;
