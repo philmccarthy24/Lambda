@@ -14,11 +14,11 @@ CMLZ01Encoder::~CMLZ01Encoder(void)
 {
 }
 
-void CMLZ01Encoder::CreateLambdaBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer, PBYTEBUF pLambdaEncoding)
+const BYTEBUF& CMLZ01Encoder::Encode(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer)
 {
 	// ToDo: param checks with exception throwing here
 
-	pLambdaEncoding->clear();
+	m_LambdaBuffer->clear();
 	std::vector<std::unique_ptr<ILambdaOperation>> lambdaOps;  
 	ULONG nSymbolPosInModifiedBuf = 0;
 
@@ -76,8 +76,10 @@ void CMLZ01Encoder::CreateLambdaBuffer(const BYTEBUF& originalBuffer, const BYTE
 	// serialise the lambda operations to the output buffer
 	for (auto lambdaOpIter = lambdaOps.begin(); lambdaOpIter != lambdaOps.end(); lambdaOpIter++)
 	{
-		(*lambdaOpIter)->Serialise(pLambdaEncoding);
+		(*lambdaOpIter)->Serialise(&m_LambdaBuffer);
 	}
+
+	return m_LambdaBuffer;
 }
 
 //pFoundSymbolPosInOriginalBuf will be unmodified if symbol not found
@@ -99,7 +101,7 @@ bool CMLZ01Encoder::FindSymbolInBuffer(const BYTEBUF& symbol, const BYTEBUF& ori
 	return bFound;
 }
 
-void CMLZ01Encoder::ApplyLambdaToBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& lambdaBuffer, PBYTEBUF pModifiedBuffer)
+virtual const BYTEBUF& CMLZ01Encoder::ApplyPatch(const BYTEBUF& originalBuffer, const BYTEBUF& lambdaBuffer)
 {
 	// first deserialise lambda operations
 	std::vector<std::unique_ptr<ILambdaOperation>> lambdaOps;
@@ -127,6 +129,6 @@ void CMLZ01Encoder::ApplyLambdaToBuffer(const BYTEBUF& originalBuffer, const BYT
 	// now iterate over each lambda op, applying it
 	for (auto lambdaOpIter = lambdaOps.begin(); lambdaOpIter != lambdaOps.end(); lambdaOpIter++)
 	{
-		(*lambdaOpIter)->ApplyLambda(originalBuffer, pModifiedBuffer);
+		(*lambdaOpIter)->ApplyLambda(originalBuffer, &m_UpdatedBuffer);
 	}
 }

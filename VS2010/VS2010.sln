@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lambda", "Lambda\Lambda.vcxproj", "{6F7DD535-7162-4441-84A3-02E60BDA6810}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticLib", "StaticLib\StaticLib.vcxproj", "{9DC5AA07-6072-487F-9361-A8BC694233D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F7DD535-7162-4441-84A3-02E60BDA6810}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6F7DD535-7162-4441-84A3-02E60BDA6810}.Debug|Win32.Build.0 = Debug|Win32
+		{6F7DD535-7162-4441-84A3-02E60BDA6810}.Release|Win32.ActiveCfg = Release|Win32
+		{6F7DD535-7162-4441-84A3-02E60BDA6810}.Release|Win32.Build.0 = Release|Win32
+		{9DC5AA07-6072-487F-9361-A8BC694233D4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9DC5AA07-6072-487F-9361-A8BC694233D4}.Debug|Win32.Build.0 = Debug|Win32
+		{9DC5AA07-6072-487F-9361-A8BC694233D4}.Release|Win32.ActiveCfg = Release|Win32
+		{9DC5AA07-6072-487F-9361-A8BC694233D4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
