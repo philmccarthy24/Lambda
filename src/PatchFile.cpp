@@ -6,6 +6,7 @@
 /// \copyright 2013 Phil McCarthy
 ////////////////////////////////////////////////////////////////////////////////////////////////
 #include "PatchFile.h"
+#include <fstream>
 
 namespace lambda
 {
@@ -25,19 +26,25 @@ CPatchFile::~CPatchFile(void)
 //TODO: - add sha1 hashes for validation
 //		- add multiple lambda buffer support per patch file so can support arbitrarily big files
 //		- add patch file 7zlib(?) compression
-void CPatchFile::Build(const tstring& strOriginalFile, const tstring& strModifiedFile)
+void CPatchFile::Create(const tstring& strOriginalFile, const tstring& strModifiedFile)
 {
 	std::ifstream originalFile(strOriginalFile, std::ios::binary);
 	BYTEBUF originalFileBuf;
 	FileStreamToVector(originalFile, &originalFileBuf);
+	originalFile.close();
 
 	std::ifstream updatedFile(strModifiedFile, std::ios::binary);
 	BYTEBUF updatedFileBuf;
 	FileStreamToVector(updatedFile, &updatedFileBuf);
+	updatedFile.close();
 
-	const BYTEBUF& patchBuffer = m_pEncoder->Encode(originalFileBuf, updatedFileBuf);
+	// get the difference encoding
+	const BYTEBUF& patchBuffer = m_pEncoder->EncodeBuffer(originalFileBuf, updatedFileBuf);
 
-	//TODO: save lambda to file m_strPatchFileName
+	// save lambda to file m_strPatchFileName
+	std::ofstream lambdaFile(m_strPatchFileName, std::ios::binary);
+	lambdaFile.write(reinterpret_cast<const char*>(patchBuffer.data()), patchBuffer.size());
+	lambdaFile.close();
 }
 
 void CPatchFile::Patch(const tstring& strOriginalFile, const tstring& strModifiedFile)
@@ -45,14 +52,19 @@ void CPatchFile::Patch(const tstring& strOriginalFile, const tstring& strModifie
 	std::ifstream originalFile(strOriginalFile, std::ios::binary);
 	BYTEBUF originalFileBuf;
 	FileStreamToVector(originalFile, &originalFileBuf);
+	originalFile.close();
 
 	std::ifstream patchFile(m_strPatchFileName, std::ios::binary);
 	BYTEBUF patchFileBuf;
 	FileStreamToVector(patchFile, &patchFileBuf);
+	patchFile.close();
 
-	const BYTEBUF& modifiedBuffer = m_pEncoder->ApplyPatch(originalFileBuf, &patchFileBuf);
+	const BYTEBUF& modifiedBuffer = m_pEncoder->DecodeBuffer(originalFileBuf, patchFileBuf);
 
-	// TODO: write modified file out here
+	// write modified file out
+	std::ofstream modifiedFile(strModifiedFile, std::ios::binary);
+	modifiedFile.write(reinterpret_cast<const char*>(modifiedBuffer.data()), modifiedBuffer.size());
+	modifiedFile.close();
 }
 
 void CPatchFile::FileStreamToVector(std::ifstream& fileStream, PBYTEBUF pBuffer)
@@ -60,7 +72,7 @@ void CPatchFile::FileStreamToVector(std::ifstream& fileStream, PBYTEBUF pBuffer)
 	pBuffer->clear();
 	// get stream size
 	fileStream.seekg(0, std::ifstream::end);
-    size_t nFileStreamSz = fileStream.tellg();
+    ULONG nFileStreamSz = fileStream.tellg();
 	fileStream.seekg(0, std::ifstream::beg);
 	// reserve space
 	pBuffer->reserve(nFileStreamSz);

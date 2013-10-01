@@ -20,7 +20,7 @@ namespace lambda
 		virtual ~CInsertOperation(void);
 
 		virtual void Serialise(PBYTEBUF pLambdaBuffer); 
-		static std::unique_ptr<CInsertOperation> Deserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos);
+		static std::unique_ptr<CInsertOperation> TryDeserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos);
 		
 		virtual ULONG GetSerialisedSize();
 		virtual void ApplyLambda(const BYTEBUF& originalBuffer, PBYTEBUF pOutputBuffer);

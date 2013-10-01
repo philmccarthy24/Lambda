@@ -66,21 +66,29 @@ void CInsertOperation::Serialise(PBYTEBUF pLambdaBuffer)
 ///			or nullptr if lambdaBuffer did not contain a CInsertOperation at
 ///			position *pLambdaBufPos
 ///////////////////////////////////////////////////////////////////////////////
-std::unique_ptr<CInsertOperation> CInsertOperation::Deserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos)
+std::unique_ptr<CInsertOperation> CInsertOperation::TryDeserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos)
 {
 	ULONG nPos = *pLambdaBufPos;
-	//TODO: throw exception if lambdaBuffer[*pLambdaBufPos] != INSERT_OPERATION_TYPE
-	return nByteToCheck == INSERT_OPERATION_TYPE;
-
+	
+	if (lambdaBuffer[nPos] != INSERT_OPERATION_TYPE)
+	{
+		// not an insert operation
+		return nullptr;
+	}
 	nPos++;
+	
 	// get length
 	ULONG nNumBytesToInsert = *(reinterpret_cast<const ULONG*>(lambdaBuffer.data() + nPos));
 	nPos += sizeof(ULONG);
+	
 	// get bytes to insert
-	m_DataToInsert.clear();
-	m_DataToInsert.assign(lambdaBuffer.begin() + nPos, lambdaBuffer.begin() + nPos + nNumBytesToInsert);
+	BYTEBUF dataToInsert;
+	dataToInsert.assign(lambdaBuffer.begin() + nPos, lambdaBuffer.begin() + nPos + nNumBytesToInsert);
 	nPos += nNumBytesToInsert;
+
+	std::unique_ptr<CInsertOperation> pInserOp(new CInsertOperation(dataToInsert));
 	*pLambdaBufPos = nPos;
+	return pInserOp;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

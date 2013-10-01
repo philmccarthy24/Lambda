@@ -68,20 +68,29 @@ void CCopyOperation::Serialise(PBYTEBUF pLambdaBuffer)
 ///			or nullptr if lambdaBuffer did not contain a CCopyOperation at
 ///			position *pLambdaBufPos
 ///////////////////////////////////////////////////////////////////////////////
-std::unique_ptr<CCopyOperation> CCopyOperation::Deserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos)
+std::unique_ptr<CCopyOperation> CCopyOperation::TryDeserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos)
 {
 	ULONG nPos = *pLambdaBufPos;
-	//TODO: throw exception if lambdaBuffer[*pLambdaBufPos] != COPY_OPERATION_TYPE
-	return nByteToCheck == COPY_OPERATION_TYPE;
-
+	
+	// check the type of the operation
+	if (lambdaBuffer[nPos] != COPY_OPERATION_TYPE)
+	{
+		// not a copy op
+		return nullptr;
+	}
 	nPos++;
+	
 	// get length
-	m_nNumBytesToCopy = *(reinterpret_cast<const ULONG*>(lambdaBuffer.data() + nPos));
+	ULONG nNumBytesToCopy = *(reinterpret_cast<const ULONG*>(lambdaBuffer.data() + nPos));
 	nPos += sizeof(ULONG);
+
 	// get dictionary buffer offset to copy from
-	m_nCopyFromOffset = *(reinterpret_cast<const ULONG*>(lambdaBuffer.data() + nPos));
+	ULONG nCopyFromOffset = *(reinterpret_cast<const ULONG*>(lambdaBuffer.data() + nPos));
 	nPos += sizeof(ULONG);
+
+	std::unique_ptr<CCopyOperation> pCopyOp(new CCopyOperation(nCopyFromOffset, nNumBytesToCopy));
 	*pLambdaBufPos = nPos;
+	return pCopyOp;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

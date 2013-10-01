@@ -41,7 +41,6 @@ CMLZ01Encoder::~CMLZ01Encoder(void)
 const BYTEBUF& CMLZ01Encoder::EncodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer)
 {
 	// ToDo: param checks with exception throwing here
-
 	m_LambdaBuffer.clear();
 	std::vector<std::unique_ptr<ILambdaOperation>> lambdaOps;  
 	ULONG nSymbolPosInModifiedBuf = 0;
@@ -143,34 +142,32 @@ bool CMLZ01Encoder::FindSymbolInBuffer(const BYTEBUF& symbol, const BYTEBUF& ori
 ///////////////////////////////////////////////////////////////////////////////
 const BYTEBUF& CMLZ01Encoder::DecodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& lambdaBuffer)
 {
-	// first deserialise lambda operations
-	std::vector<std::unique_ptr<ILambdaOperation>> lambdaOps;
+	m_UpdatedBuffer.clear();
 	ULONG nLambdaBufferPos = 0;
 	while (nLambdaBufferPos < lambdaBuffer.size())
 	{
-		if (CCopyOperation::isCopyOperation(lambdaBuffer[nLambdaBufferPos]))
+		do // do-while-false flat handling construct
 		{
-			std::unique_ptr<ILambdaOperation> copyOp(new CCopyOperation());
-			copyOp->Deserialise(lambdaBuffer, &nLambdaBufferPos);
-			lambdaOps.push_back(std::move(copyOp));
-		} 
-		else if (CInsertOperation::isInsertOperation(lambdaBuffer[nLambdaBufferPos]))
-		{
-			std::unique_ptr<ILambdaOperation> insertOp(new CInsertOperation());
-			insertOp->Deserialise(lambdaBuffer, &nLambdaBufferPos);
-			lambdaOps.push_back(std::move(insertOp));
-		}
-		else
-		{
-			// TODO: error, type not recognised. throw exception
-		}
-	}
+			std::unique_ptr<CCopyOperation> pCopyOp = CCopyOperation::TryDeserialise(lambdaBuffer, &nLambdaBufferPos);
+			if (pCopyOp != nullptr)
+			{
+				pCopyOp->ApplyLambda(originalBuffer, &m_UpdatedBuffer);
+				break;
+			}
+			
+			std::unique_ptr<CInsertOperation> pInsertOp = CInsertOperation::TryDeserialise(lambdaBuffer, &nLambdaBufferPos);
+			if (pInsertOp != nullptr)
+			{
+				pInsertOp->ApplyLambda(originalBuffer, &m_UpdatedBuffer);
+				break;
+			}
+			
+			// TODO: if we're here, then we have an error (not recognised op). throw exception
 
-	// now iterate over each lambda op, applying it
-	for (auto lambdaOpIter = lambdaOps.begin(); lambdaOpIter != lambdaOps.end(); lambdaOpIter++)
-	{
-		(*lambdaOpIter)->ApplyLambda(originalBuffer, &m_UpdatedBuffer);
+		} while (false);
+
 	}
+	return m_UpdatedBuffer;
 }
 
 }; // namespace lambda

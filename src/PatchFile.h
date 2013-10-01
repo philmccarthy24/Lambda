@@ -20,7 +20,7 @@ namespace lambda
 		CPatchFile(const tstring& strPatchFile, ILambdaEncoder* pEncoder);
 		virtual ~CPatchFile(void);
 
-		void Build(const tstring& strOriginalFile, const tstring& strModifiedFile);
+		void Create(const tstring& strOriginalFile, const tstring& strModifiedFile);
 		void Patch(const tstring& strOriginalFile, const tstring& strModifiedFile);
 
 	private:
