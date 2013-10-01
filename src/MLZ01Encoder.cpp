@@ -52,7 +52,7 @@ const BYTEBUF& CMLZ01Encoder::EncodeBuffer(const BYTEBUF& originalBuffer, const 
 
 		ULONG nFoundSymbolPosInOriginalBuf = 0;
 		bool bSymbolFound = false;
-		while (bSymbolFound = FindSymbolInBuffer(symbol, originalBuffer, &nFoundSymbolPosInOriginalBuf) && 
+		while ((bSymbolFound = FindSymbolInBuffer(symbol, originalBuffer, &nFoundSymbolPosInOriginalBuf)) &&
 				nSymbolPosInModifiedBuf + symbol.size() < modifiedBuffer.size())
 		{
 			symbol.push_back(modifiedBuffer[nSymbolPosInModifiedBuf + symbol.size()]);

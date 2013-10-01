@@ -22,6 +22,12 @@ namespace lambda
 
 		void Create(const tstring& strOriginalFile, const tstring& strModifiedFile);
 		void Patch(const tstring& strOriginalFile, const tstring& strModifiedFile);
+
+	private:
+		void FileStreamToVector(std::ifstream& fileStream, PBYTEBUF pBuffer);
+
+		ILambdaEncoder* m_pEncoder;
+		tstring m_strPatchFileName;
 	};
 };
 

@@ -22,6 +22,12 @@ namespace lambda
 		// Operations on buffers
 		virtual const BYTEBUF& EncodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer);
 		virtual const BYTEBUF& DecodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& lambdaBuffer);
+
+	private:
+		bool FindSymbolInBuffer(const BYTEBUF& symbol, const BYTEBUF& originalBuffer, PULONG pFoundSymbolPosInOriginalBuf);
+
+		BYTEBUF m_LambdaBuffer;
+		BYTEBUF m_UpdatedBuffer;
 	};
 };
 	

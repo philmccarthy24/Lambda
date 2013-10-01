@@ -28,12 +28,16 @@ CPatchFile::~CPatchFile(void)
 //		- add patch file 7zlib(?) compression
 void CPatchFile::Create(const tstring& strOriginalFile, const tstring& strModifiedFile)
 {
-	std::ifstream originalFile(strOriginalFile, std::ios::binary);
+	std::ifstream originalFile(strOriginalFile, std::ifstream::binary);
+    if (!originalFile)
+    {
+        throw std::exception();
+    }
 	BYTEBUF originalFileBuf;
 	FileStreamToVector(originalFile, &originalFileBuf);
 	originalFile.close();
 
-	std::ifstream updatedFile(strModifiedFile, std::ios::binary);
+	std::ifstream updatedFile(strModifiedFile, std::ifstream::binary);
 	BYTEBUF updatedFileBuf;
 	FileStreamToVector(updatedFile, &updatedFileBuf);
 	updatedFile.close();
@@ -42,7 +46,7 @@ void CPatchFile::Create(const tstring& strOriginalFile, const tstring& strModifi
 	const BYTEBUF& patchBuffer = m_pEncoder->EncodeBuffer(originalFileBuf, updatedFileBuf);
 
 	// save lambda to file m_strPatchFileName
-	std::ofstream lambdaFile(m_strPatchFileName, std::ios::binary);
+	std::ofstream lambdaFile(m_strPatchFileName, std::ofstream::binary);
 	lambdaFile.write(reinterpret_cast<const char*>(patchBuffer.data()), patchBuffer.size());
 	lambdaFile.close();
 }
@@ -71,9 +75,9 @@ void CPatchFile::FileStreamToVector(std::ifstream& fileStream, PBYTEBUF pBuffer)
 {
 	pBuffer->clear();
 	// get stream size
-	fileStream.seekg(0, std::ifstream::end);
+	fileStream.seekg(0, fileStream.end);
     ULONG nFileStreamSz = fileStream.tellg();
-	fileStream.seekg(0, std::ifstream::beg);
+	fileStream.seekg(0, fileStream.beg);
 	// reserve space
 	pBuffer->reserve(nFileStreamSz);
 	// do the assignment

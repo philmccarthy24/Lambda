@@ -1,0 +1,261 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4A310E8F17FB53460017CF6A /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8417FB53460017CF6A /* Common.h */; };
+		4A310E9017FB53460017CF6A /* CopyOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A310E8517FB53460017CF6A /* CopyOperation.cpp */; };
+		4A310E9117FB53460017CF6A /* CopyOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8617FB53460017CF6A /* CopyOperation.h */; };
+		4A310E9217FB53460017CF6A /* InsertOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A310E8717FB53460017CF6A /* InsertOperation.cpp */; };
+		4A310E9317FB53460017CF6A /* InsertOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8817FB53460017CF6A /* InsertOperation.h */; };
+		4A310E9417FB53460017CF6A /* LambdaEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8917FB53460017CF6A /* LambdaEncoder.h */; };
+		4A310E9517FB53460017CF6A /* LambdaOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8A17FB53460017CF6A /* LambdaOperation.h */; };
+		4A310E9617FB53460017CF6A /* MLZ01Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A310E8B17FB53460017CF6A /* MLZ01Encoder.cpp */; };
+		4A310E9717FB53460017CF6A /* MLZ01Encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8C17FB53460017CF6A /* MLZ01Encoder.h */; };
+		4A310E9817FB53460017CF6A /* PatchFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A310E8D17FB53460017CF6A /* PatchFile.cpp */; };
+		4A310E9917FB53460017CF6A /* PatchFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8E17FB53460017CF6A /* PatchFile.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4A310E7D17FB53320017CF6A /* libStaticLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A310E8417FB53460017CF6A /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = ../src/Common.h; sourceTree = SOURCE_ROOT; };
+		4A310E8517FB53460017CF6A /* CopyOperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopyOperation.cpp; path = ../src/CopyOperation.cpp; sourceTree = SOURCE_ROOT; };
+		4A310E8617FB53460017CF6A /* CopyOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopyOperation.h; path = ../src/CopyOperation.h; sourceTree = SOURCE_ROOT; };
+		4A310E8717FB53460017CF6A /* InsertOperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InsertOperation.cpp; path = ../src/InsertOperation.cpp; sourceTree = SOURCE_ROOT; };
+		4A310E8817FB53460017CF6A /* InsertOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InsertOperation.h; path = ../src/InsertOperation.h; sourceTree = SOURCE_ROOT; };
+		4A310E8917FB53460017CF6A /* LambdaEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LambdaEncoder.h; path = ../src/LambdaEncoder.h; sourceTree = SOURCE_ROOT; };
+		4A310E8A17FB53460017CF6A /* LambdaOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LambdaOperation.h; path = ../src/LambdaOperation.h; sourceTree = SOURCE_ROOT; };
+		4A310E8B17FB53460017CF6A /* MLZ01Encoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLZ01Encoder.cpp; path = ../src/MLZ01Encoder.cpp; sourceTree = SOURCE_ROOT; };
+		4A310E8C17FB53460017CF6A /* MLZ01Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLZ01Encoder.h; path = ../src/MLZ01Encoder.h; sourceTree = SOURCE_ROOT; };
+		4A310E8D17FB53460017CF6A /* PatchFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PatchFile.cpp; path = ../src/PatchFile.cpp; sourceTree = SOURCE_ROOT; };
+		4A310E8E17FB53460017CF6A /* PatchFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatchFile.h; path = ../src/PatchFile.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4A310E7A17FB53320017CF6A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4A310E7417FB53320017CF6A = {
+			isa = PBXGroup;
+			children = (
+				4A310E8417FB53460017CF6A /* Common.h */,
+				4A310E8517FB53460017CF6A /* CopyOperation.cpp */,
+				4A310E8617FB53460017CF6A /* CopyOperation.h */,
+				4A310E8717FB53460017CF6A /* InsertOperation.cpp */,
+				4A310E8817FB53460017CF6A /* InsertOperation.h */,
+				4A310E8917FB53460017CF6A /* LambdaEncoder.h */,
+				4A310E8A17FB53460017CF6A /* LambdaOperation.h */,
+				4A310E8B17FB53460017CF6A /* MLZ01Encoder.cpp */,
+				4A310E8C17FB53460017CF6A /* MLZ01Encoder.h */,
+				4A310E8D17FB53460017CF6A /* PatchFile.cpp */,
+				4A310E8E17FB53460017CF6A /* PatchFile.h */,
+				4A310E7E17FB53320017CF6A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4A310E7E17FB53320017CF6A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A310E7D17FB53320017CF6A /* libStaticLib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4A310E7B17FB53320017CF6A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A310E9317FB53460017CF6A /* InsertOperation.h in Headers */,
+				4A310E9517FB53460017CF6A /* LambdaOperation.h in Headers */,
+				4A310E9917FB53460017CF6A /* PatchFile.h in Headers */,
+				4A310E9717FB53460017CF6A /* MLZ01Encoder.h in Headers */,
+				4A310E8F17FB53460017CF6A /* Common.h in Headers */,
+				4A310E9417FB53460017CF6A /* LambdaEncoder.h in Headers */,
+				4A310E9117FB53460017CF6A /* CopyOperation.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4A310E7C17FB53320017CF6A /* StaticLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A310E8117FB53320017CF6A /* Build configuration list for PBXNativeTarget "StaticLib" */;
+			buildPhases = (
+				4A310E7917FB53320017CF6A /* Sources */,
+				4A310E7A17FB53320017CF6A /* Frameworks */,
+				4A310E7B17FB53320017CF6A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StaticLib;
+			productName = StaticLib;
+			productReference = 4A310E7D17FB53320017CF6A /* libStaticLib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A310E7517FB53320017CF6A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Phil McCarthy";
+			};
+			buildConfigurationList = 4A310E7817FB53320017CF6A /* Build configuration list for PBXProject "StaticLib" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4A310E7417FB53320017CF6A;
+			productRefGroup = 4A310E7E17FB53320017CF6A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4A310E7C17FB53320017CF6A /* StaticLib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A310E7917FB53320017CF6A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A310E9617FB53460017CF6A /* MLZ01Encoder.cpp in Sources */,
+				4A310E9217FB53460017CF6A /* InsertOperation.cpp in Sources */,
+				4A310E9817FB53460017CF6A /* PatchFile.cpp in Sources */,
+				4A310E9017FB53460017CF6A /* CopyOperation.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4A310E7F17FB53320017CF6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4A310E8017FB53320017CF6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4A310E8217FB53320017CF6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4A310E8317FB53320017CF6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4A310E7817FB53320017CF6A /* Build configuration list for PBXProject "StaticLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A310E7F17FB53320017CF6A /* Debug */,
+				4A310E8017FB53320017CF6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A310E8117FB53320017CF6A /* Build configuration list for PBXNativeTarget "StaticLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A310E8217FB53320017CF6A /* Debug */,
+				4A310E8317FB53320017CF6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4A310E7517FB53320017CF6A /* Project object */;
+}
