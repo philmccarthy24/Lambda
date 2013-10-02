@@ -47,10 +47,6 @@
 		4A3B526117FC961300D295FE /* Lambda.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Lambda.1; sourceTree = "<group>"; };
 		4A3B526817FC962D00D295FE /* StaticLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = StaticLib.xcodeproj; sourceTree = "<group>"; };
 		4A3B527117FC966400D295FE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../sample/main.cpp; sourceTree = "<group>"; };
-		4A3B527C17FC996400D295FE /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = ../../inc/Common.h; sourceTree = "<group>"; };
-		4A3B527D17FC996400D295FE /* LambdaEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LambdaEncoder.h; path = ../../inc/LambdaEncoder.h; sourceTree = "<group>"; };
-		4A3B527E17FC996400D295FE /* MLZ01Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLZ01Encoder.h; path = ../../inc/MLZ01Encoder.h; sourceTree = "<group>"; };
-		4A3B527F17FC996400D295FE /* PatchFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatchFile.h; path = ../../inc/PatchFile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +81,6 @@
 		4A3B525E17FC961300D295FE /* Lambda */ = {
 			isa = PBXGroup;
 			children = (
-				4A3B527C17FC996400D295FE /* Common.h */,
-				4A3B527D17FC996400D295FE /* LambdaEncoder.h */,
-				4A3B527E17FC996400D295FE /* MLZ01Encoder.h */,
-				4A3B527F17FC996400D295FE /* PatchFile.h */,
 				4A3B527117FC966400D295FE /* main.cpp */,
 				4A3B526117FC961300D295FE /* Lambda.1 */,
 			);
@@ -260,7 +252,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../inc,
+					../src,
 					../lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -273,7 +265,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../inc,
+					../src,
 					../lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
