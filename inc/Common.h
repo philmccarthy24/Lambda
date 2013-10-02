@@ -16,9 +16,19 @@ typedef unsigned char BYTE, *PBYTE;
 typedef std::vector<BYTE> BYTEBUF, *PBYTEBUF;
 
 #ifdef UNICODE
+
 #define tstring std::wstring
+#define tout std::wcout
+#define tchr wchar_t
+#define STR_LIT(string) L##string
+
 #else
+
 #define tstring std::string
+#define tout std::cout
+#define tchr char
+#define STR_LIT(string) string
+
 #endif
 
 #endif
