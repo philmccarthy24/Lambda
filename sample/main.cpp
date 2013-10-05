@@ -7,7 +7,7 @@
 //
 
 #include <iostream>
-#include "MLZ01Encoder.h"
+#include "MLZ01Codec.h"
 #include "PatchFile.h"
 #include "Common.h"
 #include "tclap/CmdLine.h"   // for the tclap library
@@ -42,7 +42,7 @@ int main(int argc, const tchr* argv[])
         tstring strPatchFile = patchfileArg.getValue();
         
         // set up a patch file object
-        lambda::CMLZ01Encoder bufferEncoder;
+        lambda::CMLZ01Codec bufferEncoder;
         lambda::CPatchFile patchFile(strPatchFile, &bufferEncoder);
         
         // Check what mode we're in
@@ -60,7 +60,7 @@ int main(int argc, const tchr* argv[])
 	}
     catch (TCLAP::ArgException &e)  // catch any exceptions
 	{
-        std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
+        tout << "error: " << e.error() << " for arg " << e.argId() << std::endl;
     }
     // catch lambda:: exceptions here
 	

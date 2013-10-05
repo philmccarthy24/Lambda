@@ -24,6 +24,8 @@ namespace lambda
 
 		virtual ULONG GetSerialisedSize();
 		virtual void ApplyLambda(const BYTEBUF& originalBuffer, PBYTEBUF pOutputBuffer);
+        
+        virtual void Print();
 
 	private:
 		CCopyOperation();

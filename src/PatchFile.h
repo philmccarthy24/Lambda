@@ -9,7 +9,7 @@
 #ifndef _PATCHFILE_H_
 #define _PATCHFILE_H_
 
-#include "LambdaEncoder.h"
+#include "LambdaCodec.h"
 #include "Common.h"
 
 namespace lambda
@@ -17,7 +17,7 @@ namespace lambda
 	class CPatchFile
 	{
 	public:
-		CPatchFile(const tstring& strPatchFile, ILambdaEncoder* pEncoder);
+		CPatchFile(const tstring& strPatchFile, ILambdaCodec* pCodec);
 		virtual ~CPatchFile(void);
 
 		void Create(const tstring& strOriginalFile, const tstring& strModifiedFile);
@@ -26,7 +26,7 @@ namespace lambda
 	private:
 		void FileStreamToVector(std::ifstream& fileStream, PBYTEBUF pBuffer);
 
-		ILambdaEncoder* m_pEncoder;
+		ILambdaCodec* m_pCodec;
 		tstring m_strPatchFileName;
 	};
 };

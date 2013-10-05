@@ -5,10 +5,11 @@
 /// \date September 2013
 /// \copyright 2013 Phil McCarthy
 ////////////////////////////////////////////////////////////////////////////////////////////////
-#include "MLZ01Encoder.h"
+#include "MLZ01Codec.h"
 #include "LambdaOperation.h"
 #include "CopyOperation.h"
 #include "InsertOperation.h"
+#include <iostream>
 #include <memory>
 
 namespace lambda
@@ -18,7 +19,7 @@ namespace lambda
 /// Constructor
 ///
 ///////////////////////////////////////////////////////////////////////////////
-CMLZ01Encoder::CMLZ01Encoder(void)
+CMLZ01Codec::CMLZ01Codec(void)
 {
 }
 
@@ -26,7 +27,7 @@ CMLZ01Encoder::CMLZ01Encoder(void)
 /// Destructor
 ///
 ///////////////////////////////////////////////////////////////////////////////
-CMLZ01Encoder::~CMLZ01Encoder(void)
+CMLZ01Codec::~CMLZ01Codec(void)
 {
 }
 
@@ -38,7 +39,7 @@ CMLZ01Encoder::~CMLZ01Encoder(void)
 ///												updated in some way
 /// \return const BYTEBUF& - the lambda encoding
 ///////////////////////////////////////////////////////////////////////////////
-const BYTEBUF& CMLZ01Encoder::EncodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer)
+const BYTEBUF& CMLZ01Codec::EncodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer)
 {
 	// ToDo: param checks with exception throwing here
 	m_LambdaBuffer.clear();
@@ -114,7 +115,7 @@ const BYTEBUF& CMLZ01Encoder::EncodeBuffer(const BYTEBUF& originalBuffer, const 
 /// \param [out] PULONG pFoundSymbolPosInOriginalBuf - position symbol is found
 /// \return bool - whether symbol was found or not.
 ///////////////////////////////////////////////////////////////////////////////
-bool CMLZ01Encoder::FindSymbolInBuffer(const BYTEBUF& symbol, const BYTEBUF& originalBuffer, PULONG pFoundSymbolPosInOriginalBuf)
+bool CMLZ01Codec::FindSymbolInBuffer(const BYTEBUF& symbol, const BYTEBUF& originalBuffer, PULONG pFoundSymbolPosInOriginalBuf)
 {
 	// TODO: param checks here: ensure symbol.size < originalBuffer.size, originalBuffer.size > 0 etc
 
@@ -140,7 +141,7 @@ bool CMLZ01Encoder::FindSymbolInBuffer(const BYTEBUF& symbol, const BYTEBUF& ori
 /// \param [in] const BYTEBUF& lambdaBuffer - the difference coding
 /// \return const BYTEBUF& - the modified buffer
 ///////////////////////////////////////////////////////////////////////////////
-const BYTEBUF& CMLZ01Encoder::DecodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& lambdaBuffer)
+const BYTEBUF& CMLZ01Codec::DecodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& lambdaBuffer)
 {
 	m_UpdatedBuffer.clear();
 	ULONG nLambdaBufferPos = 0;

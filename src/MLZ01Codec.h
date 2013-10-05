@@ -6,18 +6,18 @@
 /// \date September 2013
 /// \copyright 2013 Phil McCarthy
 ////////////////////////////////////////////////////////////////////////////////////////////////
-#ifndef _MLZ01ENCODER_H_
-#define _MLZ01ENCODER_H_
+#ifndef _MLZ01CODEC_H_
+#define _MLZ01CODEC_H_
 
-#include "LambdaEncoder.h"
+#include "LambdaCodec.h"
 
 namespace lambda
 {
-	class CMLZ01Encoder : public ILambdaEncoder
+	class CMLZ01Codec : public ILambdaCodec
 	{
 	public:
-		CMLZ01Encoder(void);
-		virtual ~CMLZ01Encoder(void);
+		CMLZ01Codec(void);
+		virtual ~CMLZ01Codec(void);
 
 		// Operations on buffers
 		virtual const BYTEBUF& EncodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer);

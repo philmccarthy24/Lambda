@@ -11,9 +11,9 @@
 namespace lambda
 {
 
-CPatchFile::CPatchFile(const tstring& strPatchFile, ILambdaEncoder* pEncoder) :
+CPatchFile::CPatchFile(const tstring& strPatchFile, ILambdaCodec* pCodec) :
 m_strPatchFileName(strPatchFile),
-m_pEncoder(pEncoder)
+m_pCodec(pCodec)
 {
 }
 
@@ -43,7 +43,7 @@ void CPatchFile::Create(const tstring& strOriginalFile, const tstring& strModifi
 	updatedFile.close();
 
 	// get the difference encoding
-	const BYTEBUF& patchBuffer = m_pEncoder->EncodeBuffer(originalFileBuf, updatedFileBuf);
+	const BYTEBUF& patchBuffer = m_pCodec->EncodeBuffer(originalFileBuf, updatedFileBuf);
 
 	// save lambda to file m_strPatchFileName
 	std::ofstream lambdaFile(m_strPatchFileName, std::ofstream::binary);
@@ -63,7 +63,7 @@ void CPatchFile::Patch(const tstring& strOriginalFile, const tstring& strModifie
 	FileStreamToVector(patchFile, &patchFileBuf);
 	patchFile.close();
 
-	const BYTEBUF& modifiedBuffer = m_pEncoder->DecodeBuffer(originalFileBuf, patchFileBuf);
+	const BYTEBUF& modifiedBuffer = m_pCodec->DecodeBuffer(originalFileBuf, patchFileBuf);
 
 	// write modified file out
 	std::ofstream modifiedFile(strModifiedFile, std::ios::binary);

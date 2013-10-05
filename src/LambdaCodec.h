@@ -5,14 +5,14 @@
 /// \date September 2013
 /// \copyright 2013 Phil McCarthy
 ////////////////////////////////////////////////////////////////////////////////////////////////
-#ifndef _LAMBDA_ENCODER_H_
-#define _LAMBDA_ENCODER_H_
+#ifndef _LAMBDA_CODEC_H_
+#define _LAMBDA_CODEC_H_
 
 #include "Common.h"
 
 namespace lambda
 {
-	class ILambdaEncoder
+	class ILambdaCodec
 	{
 	public:
 		virtual const BYTEBUF& EncodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer) = 0;

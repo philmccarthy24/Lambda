@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 typedef unsigned long ULONG, *PULONG;
 typedef unsigned char BYTE, *PBYTE;
@@ -19,6 +20,7 @@ typedef std::vector<BYTE> BYTEBUF, *PBYTEBUF;
 
 #define tstring std::wstring
 #define tout std::wcout
+#define terr std::wcerr
 #define tchr wchar_t
 #define STR_LIT(string) L##string
 
@@ -26,6 +28,7 @@ typedef std::vector<BYTE> BYTEBUF, *PBYTEBUF;
 
 #define tstring std::string
 #define tout std::cout
+#define terr std::cerr
 #define tchr char
 #define STR_LIT(string) string
 
