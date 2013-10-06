@@ -7,8 +7,9 @@
 //
 
 #define CATCH_CONFIG_MAIN
+#include "LambdaTests.h"
 #include "catch/catch.hpp"
-#include "MLZ01Codec.h"
+#include "MLZ02Codec.h"
 #include "CopyOperation.h"
 #include "InsertOperation.h"
 
@@ -16,37 +17,34 @@ void AnalyseLambdaBuffer(const BYTEBUF& lambdaBuffer);
 
 TEST_CASE( "Lambda basic encode and decode", "[CMLZ01Encoder]" )
 {
-    std::string strTestString = "the quick brown fox jumps over the lazy dog.";
-    std::string strUpdatedString = "the faster brown fox devours the lazy chicken.";
+    BYTEBUF testBuf(TEST_STRING.begin(), TEST_STRING.end());
+    BYTEBUF updatedBuf(UPDATED_STRING.begin(), UPDATED_STRING.end());
     
-    BYTEBUF testBuf(strTestString.begin(), strTestString.end());
-    BYTEBUF updatedBuf(strUpdatedString.begin(), strUpdatedString.end());
-    
-    lambda::CMLZ01Codec codec;
+    lambda::CMLZ02Codec codec;
     // do the difference encode
     const BYTEBUF& lambdaBuf = codec.EncodeBuffer(testBuf, updatedBuf);
     
     // look at the diff buffer
     AnalyseLambdaBuffer(lambdaBuf);
-    std::cout << "Lambda buffer is " << lambdaBuf.size() << " bytes long." << std::endl;
+    std::cout << std::endl;
+    std::cout <<  "Modified buf=" << updatedBuf.size() << " bytes, Lambda buf=" << lambdaBuf.size() << " bytes, ";
+    double dbCR = 100 - ((double)lambdaBuf.size() / (double)updatedBuf.size()) * 100;
+    std::cout << "Compression ratio = " << dbCR << "%." << std::endl;
     
     // apply the lambda to the original buffer to get back the modified buffer
     const BYTEBUF& modifiedBuf = codec.DecodeBuffer(testBuf, lambdaBuf);
     std::string strAppliedString(modifiedBuf.begin(), modifiedBuf.end());
     
     // assert that the input for the operation is the same as the output
-    REQUIRE( strUpdatedString == strAppliedString );
+    REQUIRE( UPDATED_STRING == strAppliedString );
 }
 
 TEST_CASE( "Lambda compression size", "[CMLZ01Encoder]" )
 {
-    std::string strTestString = "the quick brown fox jumps over the lazy dog.";
-    std::string strUpdatedString = "the faster brown fox devours the lazy chicken.";
+    BYTEBUF testBuf(TEST_STRING.begin(), TEST_STRING.end());
+    BYTEBUF updatedBuf(UPDATED_STRING.begin(), UPDATED_STRING.end());
     
-    BYTEBUF testBuf(strTestString.begin(), strTestString.end());
-    BYTEBUF updatedBuf(strUpdatedString.begin(), strUpdatedString.end());
-    
-    lambda::CMLZ01Codec codec;
+    lambda::CMLZ02Codec codec;
     // do the difference encode
     const BYTEBUF& lambdaBuf = codec.EncodeBuffer(testBuf, updatedBuf);
     

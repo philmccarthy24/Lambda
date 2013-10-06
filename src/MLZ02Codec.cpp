@@ -11,7 +11,6 @@
 #include "CopyOperation.h"
 #include "InsertOperation.h"
 #include <iostream>
-#include <memory>
 
 namespace lambda
 {
@@ -65,10 +64,10 @@ namespace lambda
                 // we must have matched fully to the end of modifiedBuffer
                 // create a copy op with full symbol len
                 lambdaOps.push_back(
-                                    std::unique_ptr<ILambdaOperation>(
-                                                                      new CCopyOperation(nFoundSymbolPosInOriginalBuf, symbol.size())
-                                                                      )
-                                    );
+                    std::unique_ptr<ILambdaOperation>(
+                        new CCopyOperation(nFoundSymbolPosInOriginalBuf, symbol.size())
+                    )
+                );
             } else {
                 // nFoundSymbolPosInOriginalBuf unmodified since last successful find, so we can use it
                 // to get position of last (best) length match
@@ -78,30 +77,59 @@ namespace lambda
                     symbol.pop_back();
                     // create a copy op
                     lambdaOps.push_back(
-                                        std::unique_ptr<ILambdaOperation>(
-                                                                          new CCopyOperation(nFoundSymbolPosInOriginalBuf, symbol.size())
-                                                                          )
-                                        );
+                        std::unique_ptr<ILambdaOperation>(
+                            new CCopyOperation(nFoundSymbolPosInOriginalBuf, symbol.size())
+                        )
+                    );
                 } else {
                     // no instance of symbol found (this is unusual, means byte code missing from originalBuffer)
                     // create an insert using new byte code in symbol
                     lambdaOps.push_back(
-                                        std::unique_ptr<ILambdaOperation>(
-                                                                          new CInsertOperation(symbol)
-                                                                          )
-                                        );
+                        std::unique_ptr<ILambdaOperation>(
+                            new CInsertOperation(symbol)
+                        )
+                    );
                 }
             }
             
             nSymbolPosInModifiedBuf += symbol.size();
         }
         
-        // ToDo: cost optimisation goes here
-        
-        // serialise the lambda operations to the output buffer
-        for (auto lambdaOpIter = lambdaOps.begin(); lambdaOpIter != lambdaOps.end(); lambdaOpIter++)
+        // Optimise lambda encoding by merging space inefficient lambda ops into single data insertion block.
+        // Note this could be optimised a hell of a lot more (do the below in-line above for starters, and stop all the data copying)
+        BYTEBUF mergedInsertData;
+        ULONG nInsertOpHdrSz = sizeof(BYTE) + sizeof(ULONG);
+        for (auto i = lambdaOps.begin(); i != lambdaOps.end(); i++)
         {
-            (*lambdaOpIter)->Serialise(&m_LambdaBuffer);
+            ULONG nMergedInsertOpSz = mergedInsertData.empty() ? 0 : nInsertOpHdrSz + mergedInsertData.size();
+            ULONG nFirstInsertOpHdr = mergedInsertData.empty() ? nInsertOpHdrSz : 0;
+            // compare prev merged inserts plus op coded lambda versus everything as a merged insert
+            ULONG nMergedPlusCodedSz = nMergedInsertOpSz + (*i)->Size();
+            ULONG nAllMergedAsInsertSz = nFirstInsertOpHdr + nMergedInsertOpSz + (*i)->Size(lambda::E_CTX_ORIGINAL_DATA);
+            if (nMergedPlusCodedSz > nAllMergedAsInsertSz)
+            {
+                // the insert is more space efficient, so put data in merge buffer
+                (*i)->ApplyLambda(originalBuffer, &mergedInsertData);
+            } else {
+                // the original lambda coding is more space efficient: emit rolling merged insert
+                // if there is one,
+                if (!mergedInsertData.empty())
+                {
+                    CInsertOperation insertOp(mergedInsertData);
+                    insertOp.Serialise(&m_LambdaBuffer);
+                    mergedInsertData.clear();
+                }
+                // now emit the current operation
+                (*i)->Serialise(&m_LambdaBuffer);
+            }
+        }
+        if (!mergedInsertData.empty())
+        {
+            // edge case - it's more efficient to code the entire
+            // data set as a single insert operation!
+            CInsertOperation insertOp(mergedInsertData);
+            insertOp.Serialise(&m_LambdaBuffer);
+            mergedInsertData.clear();
         }
         
         return m_LambdaBuffer;

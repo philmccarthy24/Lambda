@@ -13,6 +13,12 @@
 
 namespace lambda
 {
+    typedef enum _ElopDataContext
+    {
+        E_CTX_LAMBDA_CODING,
+        E_CTX_ORIGINAL_DATA
+    } ElopDataContext, *PElopDataContext;
+    
 	class ILambdaOperation
 	{
 	public:
@@ -33,11 +39,11 @@ namespace lambda
 		virtual void Serialise(PBYTEBUF pLambdaBuffer) = 0;
         
         ///////////////////////////////////////////////////////////////////////////////
-        /// Gets the serialised size
+        /// Gets the lambda-serialised or decoded size
         ///
         /// \return ULONG - the serialised size
         ///////////////////////////////////////////////////////////////////////////////
-		virtual ULONG GetSerialisedSize() = 0;
+		virtual ULONG Size(ElopDataContext eSizeContext = E_CTX_LAMBDA_CODING) = 0;
         
         ///////////////////////////////////////////////////////////////////////////////
         /// Prints the internal state of the operation to std out

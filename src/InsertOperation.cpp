@@ -92,14 +92,27 @@ namespace lambda
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Gets the size of the serialised state
+    /// Gets the lambda-serialised or decoded size
     ///
-    /// \return ULONG
+    /// \return ULONG - the serialised size
     ///////////////////////////////////////////////////////////////////////////////
-    ULONG CInsertOperation::GetSerialisedSize()
+    ULONG CInsertOperation::Size(_ElopDataContext eSizeContext)
     {
         // ToDo: Update if serialisation is made more efficient
-        return sizeof(BYTE) + sizeof(ULONG) + m_DataToInsert.size();
+        ULONG nSize = 0;
+        if (eSizeContext == E_CTX_LAMBDA_CODING)
+        {
+            nSize = sizeof(BYTE) + sizeof(ULONG) + m_DataToInsert.size();
+        }
+        else if (eSizeContext == E_CTX_ORIGINAL_DATA)
+        {
+            nSize = m_DataToInsert.size();
+        }
+        else
+        {
+            //throw exception here - unrecognised context
+        }
+        return nSize;
     }
 
     ///////////////////////////////////////////////////////////////////////////////

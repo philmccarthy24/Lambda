@@ -22,7 +22,8 @@ namespace lambda
 		virtual void Serialise(PBYTEBUF pLambdaBuffer); 
 		static std::unique_ptr<CInsertOperation> TryDeserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos);
 		
-		virtual ULONG GetSerialisedSize();
+		virtual ULONG Size(_ElopDataContext eSizeContext = E_CTX_LAMBDA_CODING);
+        
 		virtual void ApplyLambda(const BYTEBUF& originalBuffer, PBYTEBUF pOutputBuffer);
         
         virtual void Print();

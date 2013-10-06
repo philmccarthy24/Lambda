@@ -43,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4A0C404A1801E7B3004A0D8E /* LambdaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LambdaTests.h; path = ../../test/LambdaTests.h; sourceTree = "<group>"; };
 		4A1321B9180001DB00139B8F /* LambdaTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LambdaTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A1321BE180001DB00139B8F /* LambdaTest.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = LambdaTest.1; sourceTree = "<group>"; };
 		4A1321C5180002B400139B8F /* StaticLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = StaticLib.xcodeproj; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 			children = (
 				4A1321CE18000C1B00139B8F /* LambdaTests.cpp */,
 				4A1321BE180001DB00139B8F /* LambdaTest.1 */,
+				4A0C404A1801E7B3004A0D8E /* LambdaTests.h */,
 			);
 			path = LambdaTest;
 			sourceTree = "<group>";
