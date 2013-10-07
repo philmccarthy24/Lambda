@@ -7,7 +7,7 @@
 //
 
 #include <iostream>
-#include "MLZ01Codec.h"
+#include "MLZ02Codec.h"
 #include "PatchFile.h"
 #include "Common.h"
 #include "tclap/CmdLine.h"   // for the tclap library
@@ -34,7 +34,20 @@ int main(int argc, const tchr* argv[])
         cmd.xorAdd(createPatchSwitch, updateSwitch);
         
         // Parse the argv array.
-        cmd.parse(argc, argv);
+// ToDo: put this into tclap
+		std::vector<std::string> args;
+		for (int i = 0; i < argc; i++)
+		{
+#ifdef UNICODE
+			char buf[255];
+			wcstombs(buf, argv[i], 255);
+			args.push_back(std::string(buf));
+#else
+			args.push_back(std::string(argv[i]));
+#endif
+		}
+		cmd.parse(args);
+        //cmd.parse(argc, argv);
         
         // Get the value parsed by each arg.
         tstring strOriginalFile = infileArg.getValue();
@@ -42,7 +55,7 @@ int main(int argc, const tchr* argv[])
         tstring strPatchFile = patchfileArg.getValue();
         
         // set up a patch file object
-        lambda::CMLZ01Codec bufferEncoder;
+        lambda::CMLZ02Codec bufferEncoder;
         lambda::CPatchFile patchFile(strPatchFile, &bufferEncoder);
         
         // Check what mode we're in
@@ -60,7 +73,19 @@ int main(int argc, const tchr* argv[])
 	}
     catch (TCLAP::ArgException &e)  // catch any exceptions
 	{
-        tout << "error: " << e.error() << " for arg " << e.argId() << std::endl;
+		//TODO: fix this properly so it's much less horrid
+#ifdef UNICODE
+		tchr msgbuf[255];
+		tchr idbuf[255];
+		mbstowcs(msgbuf, e.error().c_str(), 255);
+		mbstowcs(idbuf, e.argId().c_str(), 255);
+		tstring errMsg(msgbuf);
+		tstring errId(idbuf);
+#else
+		tstring errMsg(e.error());
+		tstring errId(e.argId());
+#endif
+        tout << STR_LIT("error: ") << errMsg << STR_LIT(" for arg ") << errId << std::endl;
     }
     // catch lambda:: exceptions here
 	

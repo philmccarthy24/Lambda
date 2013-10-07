@@ -24,16 +24,16 @@
     <ClInclude Include="..\..\src\InsertOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\LambdaEncoder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\LambdaOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\MLZ01Encoder.h">
+    <ClInclude Include="..\..\src\PatchFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\PatchFile.h">
+    <ClInclude Include="..\..\src\LambdaCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\MLZ02Codec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,10 +44,10 @@
     <ClCompile Include="..\..\src\InsertOperation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\MLZ01Encoder.cpp">
+    <ClCompile Include="..\..\src\PatchFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\PatchFile.cpp">
+    <ClCompile Include="..\..\src\MLZ02Codec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

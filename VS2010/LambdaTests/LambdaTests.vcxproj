@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6F7DD535-7162-4441-84A3-02E60BDA6810}</ProjectGuid>
+    <ProjectGuid>{850BE6BF-14F4-4FFE-8BDC-1F872FCABF8E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Lambda</RootNamespace>
+    <RootNamespace>LambdaTests</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -39,7 +39,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\src;$(SolutionDir)..\lib;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\lib;$(SolutionDir)..\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -49,7 +49,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -79,7 +80,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\sample\main.cpp" />
+    <ClCompile Include="..\..\test\LambdaTests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\test\LambdaTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
