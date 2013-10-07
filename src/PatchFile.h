@@ -17,17 +17,17 @@ namespace lambda
 	class CPatchFile
 	{
 	public:
-		CPatchFile(const tstring& strPatchFile, ILambdaCodec* pCodec);
+		CPatchFile(const std::string& strPatchFile, ILambdaCodec* pCodec);
 		virtual ~CPatchFile(void);
 
-		void Create(const tstring& strOriginalFile, const tstring& strModifiedFile);
-		void Patch(const tstring& strOriginalFile, const tstring& strModifiedFile);
+		void Create(const std::string& strOriginalFile, const std::string& strModifiedFile);
+		void Patch(const std::string& strOriginalFile, const std::string& strModifiedFile);
 
 	private:
 		void FileStreamToVector(std::ifstream& fileStream, PBYTEBUF pBuffer);
 
 		ILambdaCodec* m_pCodec;
-		tstring m_strPatchFileName;
+		std::string m_strPatchFileName;
 	};
 };
 

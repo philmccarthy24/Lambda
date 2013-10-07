@@ -15,7 +15,7 @@
 // Command line arguments can be:
 // lambda -c -i infile -m modifiedfile -p patchfile
 // lambda -u -i infile -p patchfile -m modifiedfile
-int main(int argc, const tchr* argv[])
+int main(int argc, const char* argv[])
 {
     try
     {
@@ -24,9 +24,9 @@ int main(int argc, const tchr* argv[])
         TCLAP::SwitchArg createPatchSwitch("c", "create", "Create patch file from infile and modifiedfile", true);
         TCLAP::SwitchArg updateSwitch("u", "update", "Update infile to modifiedfile from patch file", true);
         
-        TCLAP::ValueArg<tstring> infileArg("i", "infile", "Input file", true, STR_LIT(""), "string");
-        TCLAP::ValueArg<tstring> modifiedfileArg("m", "modifiedfile", "Updated input file", true, STR_LIT(""), "string");
-        TCLAP::ValueArg<tstring> patchfileArg("p", "patchfile", "Difference patch file", true, STR_LIT(""), "string");
+        TCLAP::ValueArg<std::string> infileArg("i", "infile", "Input file", true, "", "string");
+        TCLAP::ValueArg<std::string> modifiedfileArg("m", "modifiedfile", "Updated input file", true, "", "string");
+        TCLAP::ValueArg<std::string> patchfileArg("p", "patchfile", "Difference patch file", true, "", "string");
         
         cmd.add(infileArg);
         cmd.add(modifiedfileArg);
@@ -34,25 +34,12 @@ int main(int argc, const tchr* argv[])
         cmd.xorAdd(createPatchSwitch, updateSwitch);
         
         // Parse the argv array.
-// ToDo: put this into tclap
-		std::vector<std::string> args;
-		for (int i = 0; i < argc; i++)
-		{
-#ifdef UNICODE
-			char buf[255];
-			wcstombs(buf, argv[i], 255);
-			args.push_back(std::string(buf));
-#else
-			args.push_back(std::string(argv[i]));
-#endif
-		}
-		cmd.parse(args);
-        //cmd.parse(argc, argv);
+        cmd.parse(argc, argv);
         
         // Get the value parsed by each arg.
-        tstring strOriginalFile = infileArg.getValue();
-        tstring strModifiedFile = modifiedfileArg.getValue();
-        tstring strPatchFile = patchfileArg.getValue();
+        std::string strOriginalFile = infileArg.getValue();
+        std::string strModifiedFile = modifiedfileArg.getValue();
+        std::string strPatchFile = patchfileArg.getValue();
         
         // set up a patch file object
         lambda::CMLZ02Codec bufferEncoder;
@@ -73,19 +60,7 @@ int main(int argc, const tchr* argv[])
 	}
     catch (TCLAP::ArgException &e)  // catch any exceptions
 	{
-		//TODO: fix this properly so it's much less horrid
-#ifdef UNICODE
-		tchr msgbuf[255];
-		tchr idbuf[255];
-		mbstowcs(msgbuf, e.error().c_str(), 255);
-		mbstowcs(idbuf, e.argId().c_str(), 255);
-		tstring errMsg(msgbuf);
-		tstring errId(idbuf);
-#else
-		tstring errMsg(e.error());
-		tstring errId(e.argId());
-#endif
-        tout << STR_LIT("error: ") << errMsg << STR_LIT(" for arg ") << errId << std::endl;
+        std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
     }
     // catch lambda:: exceptions here
 	

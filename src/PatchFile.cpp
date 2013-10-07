@@ -11,7 +11,7 @@
 namespace lambda
 {
 
-CPatchFile::CPatchFile(const tstring& strPatchFile, ILambdaCodec* pCodec) :
+CPatchFile::CPatchFile(const std::string& strPatchFile, ILambdaCodec* pCodec) :
 m_strPatchFileName(strPatchFile),
 m_pCodec(pCodec)
 {
@@ -26,7 +26,7 @@ CPatchFile::~CPatchFile(void)
 //TODO: - add sha1 hashes for validation
 //		- add multiple lambda buffer support per patch file so can support arbitrarily big files
 //		- add patch file 7zlib(?) compression
-void CPatchFile::Create(const tstring& strOriginalFile, const tstring& strModifiedFile)
+void CPatchFile::Create(const std::string& strOriginalFile, const std::string& strModifiedFile)
 {
 	std::ifstream originalFile(strOriginalFile, std::ifstream::binary);
     if (!originalFile)
@@ -51,7 +51,7 @@ void CPatchFile::Create(const tstring& strOriginalFile, const tstring& strModifi
 	lambdaFile.close();
 }
 
-void CPatchFile::Patch(const tstring& strOriginalFile, const tstring& strModifiedFile)
+void CPatchFile::Patch(const std::string& strOriginalFile, const std::string& strModifiedFile)
 {
 	std::ifstream originalFile(strOriginalFile, std::ios::binary);
 	BYTEBUF originalFileBuf;

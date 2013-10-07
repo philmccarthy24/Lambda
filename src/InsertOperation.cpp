@@ -133,8 +133,8 @@ namespace lambda
     ///////////////////////////////////////////////////////////////////////////////
     void CInsertOperation::Print()
     {
-        tout << STR_LIT("Insert op: insert ") << m_DataToInsert.size()
-                << STR_LIT(" bytes.") << std::endl;
+        std::cout << "Insert op: insert " << m_DataToInsert.size()
+                << " bytes." << std::endl;
     }
 
 }; // namespace lambda

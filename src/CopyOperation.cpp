@@ -138,9 +138,9 @@ namespace lambda
     ///////////////////////////////////////////////////////////////////////////////
     void CCopyOperation::Print()
     {
-        tout << STR_LIT("Copy op: copy ") << m_nNumBytesToCopy
-                << STR_LIT(" bytes from offset ") << m_nCopyFromOffset
-                << STR_LIT(".") << std::endl;
+        std::cout << "Copy op: copy " << m_nNumBytesToCopy
+                << " bytes from offset " << m_nCopyFromOffset
+                << "." << std::endl;
     }
 
 }; // namespace lambda
