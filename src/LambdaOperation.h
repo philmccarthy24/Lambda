@@ -10,14 +10,10 @@
 #define _LAMBDA_OPERATION_H_
 
 #include "Common.h"
+#include "LambdaIO.h"
 
 namespace lambda
 {
-    typedef enum _ElopDataContext
-    {
-        E_CTX_LAMBDA_CODING,
-        E_CTX_ORIGINAL_DATA
-    } ElopDataContext, *PElopDataContext;
     
 	class ILambdaOperation
 	{
@@ -26,30 +22,31 @@ namespace lambda
         /// Apply the lambda operation using specified dictionary buffer, writing to
         /// the output buffer
         ///
-        /// \param [in] const BYTEBUF& originalBuffer - the buffer to use as dictionary
-        /// \param [out] PBYTEBUF pOutputBuffer - the buffer to apply the lambda op to
+        /// \param [out] CDataBuffer* pOutputBuffer - the buffer to apply the lambda op to
         ///////////////////////////////////////////////////////////////////////////////
-		virtual void ApplyLambda(const BYTEBUF& originalBuffer, PBYTEBUF pOutputBuffer) = 0;
+		virtual void Apply(const IDataWriter& outputWriter) const = 0;
         
         ///////////////////////////////////////////////////////////////////////////////
         /// Serialise the operation to byte buffer
         ///
-        /// \param [out] PBYTEBUF pLambdaBuffer - the buffer to serialise to
+        /// \param [out] IDataWriter* pLambdaBuffer - the data writer object to use
+        ///                                             for serialisation
         ///////////////////////////////////////////////////////////////////////////////
-		virtual void Serialise(PBYTEBUF pLambdaBuffer) = 0;
+		virtual void Serialise(const IDataWriter& lambdaWriter) = 0;
         
         ///////////////////////////////////////////////////////////////////////////////
-        /// Gets the lambda-serialised or decoded size
+        /// Gets the lambda-serialised size
         ///
         /// \return ULONG - the serialised size
         ///////////////////////////////////////////////////////////////////////////////
-		virtual ULONG Size(ElopDataContext eSizeContext = E_CTX_LAMBDA_CODING) = 0;
+		virtual ULONG ObjectSize() const = 0;
         
         ///////////////////////////////////////////////////////////////////////////////
-        /// Prints the internal state of the operation to std out
+        /// Gets the decoded size
         ///
+        /// \return ULONG - the decoded block size
         ///////////////////////////////////////////////////////////////////////////////
-        virtual void Print() = 0;
+		virtual ULONG WriteSize() const = 0;
 	};
 };
 

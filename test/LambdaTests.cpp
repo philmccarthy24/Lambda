@@ -13,16 +13,16 @@
 #include "CopyOperation.h"
 #include "InsertOperation.h"
 
-void AnalyseLambdaBuffer(const BYTEBUF& lambdaBuffer);
+void AnalyseLambdaBuffer(const BYTEVECTOR& lambdaBuffer);
 
 TEST_CASE( "Lambda basic encode and decode", "[CMLZ01Encoder]" )
 {
-    BYTEBUF testBuf(TEST_STRING.begin(), TEST_STRING.end());
-    BYTEBUF updatedBuf(UPDATED_STRING.begin(), UPDATED_STRING.end());
+    BYTEVECTOR testBuf(TEST_STRING.begin(), TEST_STRING.end());
+    BYTEVECTOR updatedBuf(UPDATED_STRING.begin(), UPDATED_STRING.end());
     
     lambda::CMLZ02Codec codec;
     // do the difference encode
-    const BYTEBUF& lambdaBuf = codec.EncodeBuffer(testBuf, updatedBuf);
+    const BYTEVECTOR& lambdaBuf = codec.EncodeBuffer(testBuf, updatedBuf);
     
     // look at the diff buffer
     AnalyseLambdaBuffer(lambdaBuf);
@@ -32,7 +32,7 @@ TEST_CASE( "Lambda basic encode and decode", "[CMLZ01Encoder]" )
     std::cout << "Compression ratio = " << dbCR << "%." << std::endl;
     
     // apply the lambda to the original buffer to get back the modified buffer
-    const BYTEBUF& modifiedBuf = codec.DecodeBuffer(testBuf, lambdaBuf);
+    const BYTEVECTOR& modifiedBuf = codec.DecodeBuffer(testBuf, lambdaBuf);
     std::string strAppliedString(modifiedBuf.begin(), modifiedBuf.end());
     
     // assert that the input for the operation is the same as the output
@@ -41,19 +41,19 @@ TEST_CASE( "Lambda basic encode and decode", "[CMLZ01Encoder]" )
 
 TEST_CASE( "Lambda compression size", "[CMLZ01Encoder]" )
 {
-    BYTEBUF testBuf(TEST_STRING.begin(), TEST_STRING.end());
-    BYTEBUF updatedBuf(UPDATED_STRING.begin(), UPDATED_STRING.end());
+    BYTEVECTOR testBuf(TEST_STRING.begin(), TEST_STRING.end());
+    BYTEVECTOR updatedBuf(UPDATED_STRING.begin(), UPDATED_STRING.end());
     
     lambda::CMLZ02Codec codec;
     // do the difference encode
-    const BYTEBUF& lambdaBuf = codec.EncodeBuffer(testBuf, updatedBuf);
+    const BYTEVECTOR& lambdaBuf = codec.EncodeBuffer(testBuf, updatedBuf);
     
     // assert that lambda compressed form has actually saved space compared to the data being encoded
     REQUIRE( lambdaBuf.size() < updatedBuf.size() );
 }
 
 // print out the deserialised contents of the lambda buffer
-void AnalyseLambdaBuffer(const BYTEBUF& lambdaBuffer)
+void AnalyseLambdaBuffer(const BYTEVECTOR& lambdaBuffer)
 {
 	ULONG nLambdaBufferPos = 0;
 	while (nLambdaBufferPos < lambdaBuffer.size())

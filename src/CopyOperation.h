@@ -9,32 +9,30 @@
 #define _COPY_OPERATION_H_
 
 #include "LambdaOperation.h"
+#include "DataBuffer.h"
 
 namespace lambda
 {
 	class CCopyOperation : public ILambdaOperation
 	{
 	public:
-		CCopyOperation(ULONG nCopyFromOffset, ULONG nNumBytesToCopy);
-		
-		virtual ~CCopyOperation(void);
+		CCopyOperation(const CDataBuffer& copyFromBuffer, const CDataBuffer& dataToCopy);
 
-		virtual void Serialise(PBYTEBUF pLambdaBuffer);
-		static std::unique_ptr<CCopyOperation> TryDeserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos);
-
-		virtual ULONG Size(_ElopDataContext eSizeContext = E_CTX_LAMBDA_CODING);
+		virtual void Serialise(const IDataWriter& lambdaWriter);
+		static std::unique_ptr<CCopyOperation> TryDeserialise(const CDataBuffer& copyFromBuffer, IDataReader& lambdaReader);
         
-		virtual void ApplyLambda(const BYTEBUF& originalBuffer, PBYTEBUF pOutputBuffer);
+        virtual ULONG ObjectSize() const;
+		virtual ULONG WriteSize() const;
         
-        virtual void Print();
+		virtual void Apply(const IDataWriter& modifiedWriter);
 
 	private:
 		CCopyOperation();
 
 		static const BYTE COPY_OPERATION_TYPE;
-
-		ULONG m_nCopyFromOffset;
-		ULONG m_nNumBytesToCopy;
+        
+        CDataBuffer m_dataToCopy;
+        CDataBuffer m_copyFromBuffer;
 	};
 };
 

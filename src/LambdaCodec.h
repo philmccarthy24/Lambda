@@ -9,14 +9,15 @@
 #define _LAMBDA_CODEC_H_
 
 #include "Common.h"
+#include "DataBuffer.h"
 
 namespace lambda
 {
 	class ILambdaCodec
 	{
 	public:
-		virtual const BYTEBUF& EncodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& modifiedBuffer) = 0;
-		virtual const BYTEBUF& DecodeBuffer(const BYTEBUF& originalBuffer, const BYTEBUF& lambdaBuffer) = 0;
+		virtual const CDataBuffer EncodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& modifiedBuffer) = 0;
+		virtual const CDataBuffer DecodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& lambdaBuffer) = 0;
 	};
 };
 

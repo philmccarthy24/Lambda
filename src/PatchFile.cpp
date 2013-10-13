@@ -33,17 +33,17 @@ void CPatchFile::Create(const std::string& strOriginalFile, const std::string& s
     {
         throw std::exception();
     }
-	BYTEBUF originalFileBuf;
+	BYTEVECTOR originalFileBuf;
 	FileStreamToVector(originalFile, &originalFileBuf);
 	originalFile.close();
 
 	std::ifstream updatedFile(strModifiedFile, std::ifstream::binary);
-	BYTEBUF updatedFileBuf;
+	BYTEVECTOR updatedFileBuf;
 	FileStreamToVector(updatedFile, &updatedFileBuf);
 	updatedFile.close();
 
 	// get the difference encoding
-	const BYTEBUF& patchBuffer = m_pCodec->EncodeBuffer(originalFileBuf, updatedFileBuf);
+	const BYTEVECTOR& patchBuffer = m_pCodec->EncodeBuffer(originalFileBuf, updatedFileBuf);
 
 	// save lambda to file m_strPatchFileName
 	std::ofstream lambdaFile(m_strPatchFileName, std::ofstream::binary);
@@ -54,16 +54,16 @@ void CPatchFile::Create(const std::string& strOriginalFile, const std::string& s
 void CPatchFile::Patch(const std::string& strOriginalFile, const std::string& strModifiedFile)
 {
 	std::ifstream originalFile(strOriginalFile, std::ios::binary);
-	BYTEBUF originalFileBuf;
+	BYTEVECTOR originalFileBuf;
 	FileStreamToVector(originalFile, &originalFileBuf);
 	originalFile.close();
 
 	std::ifstream patchFile(m_strPatchFileName, std::ios::binary);
-	BYTEBUF patchFileBuf;
+	BYTEVECTOR patchFileBuf;
 	FileStreamToVector(patchFile, &patchFileBuf);
 	patchFile.close();
 
-	const BYTEBUF& modifiedBuffer = m_pCodec->DecodeBuffer(originalFileBuf, patchFileBuf);
+	const BYTEVECTOR& modifiedBuffer = m_pCodec->DecodeBuffer(originalFileBuf, patchFileBuf);
 
 	// write modified file out
 	std::ofstream modifiedFile(strModifiedFile, std::ios::binary);
@@ -71,7 +71,7 @@ void CPatchFile::Patch(const std::string& strOriginalFile, const std::string& st
 	modifiedFile.close();
 }
 
-void CPatchFile::FileStreamToVector(std::ifstream& fileStream, PBYTEBUF pBuffer)
+void CPatchFile::FileStreamToVector(std::ifstream& fileStream, PBYTEVECTOR pBuffer)
 {
 	pBuffer->clear();
 	// get stream size

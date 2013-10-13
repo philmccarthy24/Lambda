@@ -9,31 +9,34 @@
 #define _INSERT_OPERATION_H_
 
 #include "LambdaOperation.h"
+#include "DataBuffer.h"
 
 namespace lambda
 {
 	class CInsertOperation : public ILambdaOperation
 	{
 	public:
-		CInsertOperation(const BYTEBUF& dataToInsert);
-		
-		virtual ~CInsertOperation(void);
+		CInsertOperation(const CDataBuffer& dataToInsert);
+        CInsertOperation();
 
-		virtual void Serialise(PBYTEBUF pLambdaBuffer); 
-		static std::unique_ptr<CInsertOperation> TryDeserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos);
+		virtual void Serialise(const IDataWriter& lambdaWriter);
+		static std::unique_ptr<CInsertOperation> TryDeserialise(IDataReader& lambdaReader);
 		
-		virtual ULONG Size(_ElopDataContext eSizeContext = E_CTX_LAMBDA_CODING);
+		virtual ULONG ObjectSize() const;
+		virtual ULONG WriteSize() const;
         
-		virtual void ApplyLambda(const BYTEBUF& originalBuffer, PBYTEBUF pOutputBuffer);
+		virtual void Apply(const IDataWriter& outputWriter) const;
         
-        virtual void Print();
+        void Merge(const ILambdaOperation& operationToMerge);
+        int CalcMergeCost(const ILambdaOperation& operationToMerge) const;
+        void Reset();
 
 	private:
-		CInsertOperation();
-		
+        ULONG GetHdrSize() const;
+        
 		static const BYTE INSERT_OPERATION_TYPE;
 
-		BYTEBUF m_DataToInsert;
+		BYTEVECTOR m_DataToInsert;
 	};
 };
 

@@ -5,6 +5,7 @@
 /// \date September 2013
 /// \copyright 2013 Phil McCarthy
 ////////////////////////////////////////////////////////////////////////////////////////////////
+#include "LambdaIO.h"
 #include "InsertOperation.h"
 
 namespace lambda
@@ -15,15 +16,17 @@ namespace lambda
     ///////////////////////////////////////////////////////////////////////////////
     /// Main constructor
     ///
-    /// \param [in] const BYTEBUF& dataToInsert - the data to insert
+    /// \param [in] const CDataBuffer& dataToInsert - the data to insert
     ///////////////////////////////////////////////////////////////////////////////
-    CInsertOperation::CInsertOperation(const BYTEBUF& dataToInsert) :
-        m_DataToInsert(dataToInsert)
+    CInsertOperation::CInsertOperation(const CDataBuffer& dataToInsert)
     {
+        m_DataToInsert.insert(m_DataToInsert.end(),
+                              dataToInsert.Buffer(),
+                              dataToInsert.Buffer() + dataToInsert.Size());
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Default constructor
+    /// Default Constructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
     CInsertOperation::CInsertOperation()
@@ -31,110 +34,126 @@ namespace lambda
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Destructor
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    CInsertOperation::~CInsertOperation(void)
-    {
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Serialises the insert operation to a buffer
+    /// Serialises the insert operation to a buffer. If the insert operation contains
+    /// no data to insert, this function returns without doing anything
     ///
     /// \param [out] PBYTEBUF pLambdaBuffer - the buffer to serialise to
     ///////////////////////////////////////////////////////////////////////////////
-    void CInsertOperation::Serialise(PBYTEBUF pLambdaBuffer)
+    void CInsertOperation::Serialise(const IDataWriter& lambdaWriter)
     {
-        // first output the type. We can hone this to be a bit.
-        pLambdaBuffer->push_back(INSERT_OPERATION_TYPE);
-        // then output length
-        ULONG nDataInsertionLength = m_DataToInsert.size();
-        size_t nLambdaSz = pLambdaBuffer->size();
-        pLambdaBuffer->resize(nLambdaSz + sizeof(nDataInsertionLength));
-        std::memcpy(pLambdaBuffer->data() + nLambdaSz, &nDataInsertionLength, sizeof(nDataInsertionLength));
-        // then output data
-        //pLambdaBuffer->reserve(pLambdaBuffer->size() + nDataInsertionLength);
-        pLambdaBuffer->insert(pLambdaBuffer->end(), m_DataToInsert.begin(), m_DataToInsert.end());
+        if (!m_DataToInsert.empty())
+        {
+            // first output the type. We can hone this to be a bit.
+            lambdaWriter.WriteByte(INSERT_OPERATION_TYPE);
+            
+            // then output length
+            lambdaWriter.WriteULONG(m_DataToInsert.size());
+            
+            // then output data
+            lambdaWriter.WriteData(m_DataToInsert);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Reads the insert operation state from a buffer
     ///
-    /// \param [in] const BYTEBUF& lambdaBuffer - the buffer to read from
+    /// \param [in] const BYTEVECTOR& lambdaBuffer - the buffer to read from
     /// \param [in,out] PULONG pLambdaBufPos - the position in the buffer to read from
     /// \return std::unique_ptr<CInsertOperation> - the deserialised insert operation,
     ///			or nullptr if lambdaBuffer did not contain a CInsertOperation at
     ///			position *pLambdaBufPos
     ///////////////////////////////////////////////////////////////////////////////
-    std::unique_ptr<CInsertOperation> CInsertOperation::TryDeserialise(const BYTEBUF& lambdaBuffer, PULONG pLambdaBufPos)
+    std::unique_ptr<CInsertOperation> CInsertOperation::TryDeserialise(IDataReader& lambdaReader)
     {
-        ULONG nPos = *pLambdaBufPos;
-        
-        if (lambdaBuffer[nPos] != INSERT_OPERATION_TYPE)
+        if (lambdaReader.PeekByte() != INSERT_OPERATION_TYPE)
         {
             // not an insert operation
             return nullptr;
         }
-        nPos++;
+        lambdaReader.ReadByte();
         
         // get length
-        ULONG nNumBytesToInsert = *(reinterpret_cast<const ULONG*>(lambdaBuffer.data() + nPos));
-        nPos += sizeof(ULONG);
+        ULONG nNumBytesToInsert = lambdaReader.ReadULONG();
         
-        // get bytes to insert
-        BYTEBUF dataToInsert;
-        dataToInsert.assign(lambdaBuffer.begin() + nPos, lambdaBuffer.begin() + nPos + nNumBytesToInsert);
-        nPos += nNumBytesToInsert;
-
-        std::unique_ptr<CInsertOperation> pInserOp(new CInsertOperation(dataToInsert));
-        *pLambdaBufPos = nPos;
+        // get bytes to insert and use to create a new InsertOperation
+        std::unique_ptr<CInsertOperation> pInserOp(
+            new CInsertOperation(
+                lambdaReader.ReadData(nNumBytesToInsert)
+            )
+        );
+        
         return pInserOp;
     }
-
+    
     ///////////////////////////////////////////////////////////////////////////////
-    /// Gets the lambda-serialised or decoded size
+    /// Gets the lambda-serialised size
     ///
     /// \return ULONG - the serialised size
     ///////////////////////////////////////////////////////////////////////////////
-    ULONG CInsertOperation::Size(_ElopDataContext eSizeContext)
+    ULONG CInsertOperation::ObjectSize() const
     {
         // ToDo: Update if serialisation is made more efficient
-        ULONG nSize = 0;
-        if (eSizeContext == E_CTX_LAMBDA_CODING)
-        {
-            nSize = sizeof(BYTE) + sizeof(ULONG) + m_DataToInsert.size();
-        }
-        else if (eSizeContext == E_CTX_ORIGINAL_DATA)
-        {
-            nSize = m_DataToInsert.size();
-        }
-        else
-        {
-            //throw exception here - unrecognised context
-        }
-        return nSize;
+        return GetHdrSize() + m_DataToInsert.size();
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Gets the decoded size
+    ///
+    /// \return ULONG - the decoded block size
+    ///////////////////////////////////////////////////////////////////////////////
+    ULONG CInsertOperation::WriteSize() const
+    {
+        return m_DataToInsert.size();
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Applies the insert operation - appends data payload to the output buffer
     ///
-    /// \param [in] const BYTEBUF& originalBuffer - ignored
+    /// \param [in] const BYTEVECTOR& originalBuffer - ignored
     /// \param [out] PBYTEBUF pOutputBuffer - the buffer to insert data into
     ///////////////////////////////////////////////////////////////////////////////
-    void CInsertOperation::ApplyLambda(const BYTEBUF& originalBuffer, PBYTEBUF pOutputBuffer)
+    void CInsertOperation::Apply(const IDataWriter& outputWriter) const
     {
-        //pOutputBuffer->reserve(pOutputBuffer->size() + m_DataToInsert.size());
-        pOutputBuffer->insert(pOutputBuffer->end(), m_DataToInsert.begin(), m_DataToInsert.end());
+        //const CDataBuffer insertWriteBuf(m_DataToInsert.data(), m_DataToInsert.size());
+        outputWriter.WriteData(m_DataToInsert);
     }
     
     ///////////////////////////////////////////////////////////////////////////////
-    /// Prints the internal state of the operation to std out
+    /// Gets the serialised operation header size
     ///
+    /// \return ULONG - header size
     ///////////////////////////////////////////////////////////////////////////////
-    void CInsertOperation::Print()
+    ULONG CInsertOperation::GetHdrSize() const
     {
-        std::cout << "Insert op: insert " << m_DataToInsert.size()
-                << " bytes." << std::endl;
+        return sizeof(BYTE) + sizeof(ULONG);
     }
+    
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Calculates the cost of combining specified operation into this insert.
+    ///
+    /// \return ULONG - cost of merging. > 0 means bytes saved by merging
+    ///////////////////////////////////////////////////////////////////////////////
+    int CInsertOperation::CalcMergeCost(const ILambdaOperation& operationToMerge) const
+    {
+        ULONG nMergedInsertOpSz = m_DataToInsert.empty() ? 0 : ObjectSize();
+        ULONG nFirstInsertOpHdr = m_DataToInsert.empty() ? GetHdrSize() : 0;
+        // compare [prev merged ops] plus [op coded lambda], versus [everything as a merged insert]
+        ULONG nMergedPlusCodedSz = nMergedInsertOpSz + operationToMerge.ObjectSize();
+        ULONG nAllMergedAsInsertSz = nFirstInsertOpHdr + nMergedInsertOpSz + operationToMerge.WriteSize();
+        int nMergeCost = static_cast<int>(nMergedPlusCodedSz) - static_cast<int>(nAllMergedAsInsertSz);
+        return nMergeCost;
+    }
+    
+    void CInsertOperation::Merge(const ILambdaOperation& operationToMerge)
+    {
+        CVectorWriter insertVecWriter(m_DataToInsert);
+        operationToMerge.Apply(insertVecWriter);
+    }
+    
+    void CInsertOperation::Reset()
+    {
+        m_DataToInsert.clear();
+    }
+
 
 }; // namespace lambda

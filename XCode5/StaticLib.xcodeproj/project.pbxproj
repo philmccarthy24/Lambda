@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A1321EB18001CBC00139B8F /* MLZ02Codec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A1321E918001CBC00139B8F /* MLZ02Codec.cpp */; };
-		4A1321EC18001CBC00139B8F /* MLZ02Codec.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A1321EA18001CBC00139B8F /* MLZ02Codec.h */; };
+		4A1321EB18001CBC00139B8F /* MLZ03Codec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A1321E918001CBC00139B8F /* MLZ03Codec.cpp */; };
+		4A1321EC18001CBC00139B8F /* MLZ03Codec.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A1321EA18001CBC00139B8F /* MLZ03Codec.h */; };
+		4A2E6E3518071A5400B28BB4 /* DataBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6E3318071A5400B28BB4 /* DataBuffer.cpp */; };
+		4A2E6E3618071A5400B28BB4 /* DataBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A2E6E3418071A5400B28BB4 /* DataBuffer.h */; };
 		4A310E8F17FB53460017CF6A /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8417FB53460017CF6A /* Common.h */; };
 		4A310E9017FB53460017CF6A /* CopyOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A310E8517FB53460017CF6A /* CopyOperation.cpp */; };
 		4A310E9117FB53460017CF6A /* CopyOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8617FB53460017CF6A /* CopyOperation.h */; };
@@ -18,11 +20,14 @@
 		4A310E9517FB53460017CF6A /* LambdaOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8A17FB53460017CF6A /* LambdaOperation.h */; };
 		4A310E9817FB53460017CF6A /* PatchFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A310E8D17FB53460017CF6A /* PatchFile.cpp */; };
 		4A310E9917FB53460017CF6A /* PatchFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8E17FB53460017CF6A /* PatchFile.h */; };
+		4AF162EF1809B75B00BB0D5A /* LambdaIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AF162EE1809B75B00BB0D5A /* LambdaIO.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4A1321E918001CBC00139B8F /* MLZ02Codec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLZ02Codec.cpp; path = ../src/MLZ02Codec.cpp; sourceTree = "<group>"; };
-		4A1321EA18001CBC00139B8F /* MLZ02Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLZ02Codec.h; path = ../src/MLZ02Codec.h; sourceTree = "<group>"; };
+		4A1321E918001CBC00139B8F /* MLZ03Codec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLZ03Codec.cpp; path = ../src/MLZ03Codec.cpp; sourceTree = "<group>"; };
+		4A1321EA18001CBC00139B8F /* MLZ03Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLZ03Codec.h; path = ../src/MLZ03Codec.h; sourceTree = "<group>"; };
+		4A2E6E3318071A5400B28BB4 /* DataBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBuffer.cpp; path = ../src/DataBuffer.cpp; sourceTree = "<group>"; };
+		4A2E6E3418071A5400B28BB4 /* DataBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataBuffer.h; path = ../src/DataBuffer.h; sourceTree = "<group>"; };
 		4A310E7D17FB53320017CF6A /* libStaticLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A310E8417FB53460017CF6A /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = ../src/Common.h; sourceTree = SOURCE_ROOT; };
 		4A310E8517FB53460017CF6A /* CopyOperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopyOperation.cpp; path = ../src/CopyOperation.cpp; sourceTree = SOURCE_ROOT; };
@@ -33,6 +38,7 @@
 		4A310E8A17FB53460017CF6A /* LambdaOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LambdaOperation.h; path = ../src/LambdaOperation.h; sourceTree = SOURCE_ROOT; };
 		4A310E8D17FB53460017CF6A /* PatchFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PatchFile.cpp; path = ../src/PatchFile.cpp; sourceTree = SOURCE_ROOT; };
 		4A310E8E17FB53460017CF6A /* PatchFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatchFile.h; path = ../src/PatchFile.h; sourceTree = SOURCE_ROOT; };
+		4AF162EE1809B75B00BB0D5A /* LambdaIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LambdaIO.h; path = ../src/LambdaIO.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,8 +55,11 @@
 		4A310E7417FB53320017CF6A = {
 			isa = PBXGroup;
 			children = (
-				4A1321E918001CBC00139B8F /* MLZ02Codec.cpp */,
-				4A1321EA18001CBC00139B8F /* MLZ02Codec.h */,
+				4AF162EE1809B75B00BB0D5A /* LambdaIO.h */,
+				4A2E6E3318071A5400B28BB4 /* DataBuffer.cpp */,
+				4A2E6E3418071A5400B28BB4 /* DataBuffer.h */,
+				4A1321E918001CBC00139B8F /* MLZ03Codec.cpp */,
+				4A1321EA18001CBC00139B8F /* MLZ03Codec.h */,
 				4A310E8417FB53460017CF6A /* Common.h */,
 				4A310E8517FB53460017CF6A /* CopyOperation.cpp */,
 				4A310E8617FB53460017CF6A /* CopyOperation.h */,
@@ -81,9 +90,11 @@
 			files = (
 				4A310E9317FB53460017CF6A /* InsertOperation.h in Headers */,
 				4A310E9517FB53460017CF6A /* LambdaOperation.h in Headers */,
+				4AF162EF1809B75B00BB0D5A /* LambdaIO.h in Headers */,
 				4A310E9917FB53460017CF6A /* PatchFile.h in Headers */,
 				4A310E8F17FB53460017CF6A /* Common.h in Headers */,
-				4A1321EC18001CBC00139B8F /* MLZ02Codec.h in Headers */,
+				4A2E6E3618071A5400B28BB4 /* DataBuffer.h in Headers */,
+				4A1321EC18001CBC00139B8F /* MLZ03Codec.h in Headers */,
 				4A310E9417FB53460017CF6A /* LambdaCodec.h in Headers */,
 				4A310E9117FB53460017CF6A /* CopyOperation.h in Headers */,
 			);
@@ -140,10 +151,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A1321EB18001CBC00139B8F /* MLZ02Codec.cpp in Sources */,
+				4A1321EB18001CBC00139B8F /* MLZ03Codec.cpp in Sources */,
 				4A310E9217FB53460017CF6A /* InsertOperation.cpp in Sources */,
 				4A310E9817FB53460017CF6A /* PatchFile.cpp in Sources */,
 				4A310E9017FB53460017CF6A /* CopyOperation.cpp in Sources */,
+				4A2E6E3518071A5400B28BB4 /* DataBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
