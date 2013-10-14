@@ -27,9 +27,9 @@ namespace lambda
     /// \param [in] const CDataBuffer& originalBuffer - a buffer of data
     /// \param [in] const CDataBuffer& modifiedBuffer - data in originalBuffer, but
     ///												updated in some way
-    /// \return const CDataBuffer& - the lambda encoding
+    /// \return CDataBuffer& - the lambda encoding
     ///////////////////////////////////////////////////////////////////////////////
-    const CDataBuffer CMLZ03Codec::EncodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& modifiedBuffer)
+    CDataBuffer CMLZ03Codec::EncodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& modifiedBuffer)
     {
         // some param checking
         if (originalBuffer.Buffer() == modifiedBuffer.Buffer())
@@ -111,13 +111,12 @@ namespace lambda
         assert(!patternBuffer.IsEmpty());
         
         ULONG nPatternPos = 0;
-        ULONG nTryMatchLen = 0;
+        ULONG nTryMatchLen = 1;
         CDataBuffer longestPattern;
         
         while (nPatternPos + nTryMatchLen < patternBuffer.Size() &&
                nTryMatchLen <= sourceBuffer.Size()) // if not, longestPattern matches the entirety of sourceBuffer
         {
-            nTryMatchLen++;
             CDataBuffer tryPattern = sourceBuffer.GetSection(0, nTryMatchLen);
             CDataBuffer matchPattern = patternBuffer.GetSection(nPatternPos, nTryMatchLen);
             if (tryPattern.IsEqualBytes(matchPattern))
@@ -130,10 +129,20 @@ namespace lambda
                 {
                     longestPattern = matchPattern;
                 }
+                nTryMatchLen++;
             } else {
-                // failed to match - move the pattern pos to the end of the last match
-                nPatternPos += nTryMatchLen;
-                nTryMatchLen = 0;
+                // failed to match
+                if (nTryMatchLen > 1)
+                {
+                    // move the pattern pos to the end of the last match
+                    nPatternPos += nTryMatchLen - 1;
+                }
+                else
+                {
+                    // no last match - increment to next byte
+                    nPatternPos++;
+                }
+                nTryMatchLen = 1;
             }
         }
         
@@ -164,15 +173,13 @@ namespace lambda
     /// \param [in] const BYTEVECTOR& lambdaBuffer - the difference coding
     /// \return const BYTEVECTOR& - the modified buffer
     ///////////////////////////////////////////////////////////////////////////////
-    const CDataBuffer CMLZ03Codec::DecodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& lambdaBuffer)
+    CDataBuffer CMLZ03Codec::DecodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& lambdaBuffer)
     {
         m_UpdatedBuffer.clear();
         CVectorWriter modifiedWriter(m_UpdatedBuffer);
         
         CDataBufferReader lambdaReader(lambdaBuffer);
-        
-        ULONG nLambdaBufferPos = 0;
-        while (nLambdaBufferPos < lambdaBuffer.Size())
+        while (lambdaReader.BytesToRead() > 0)
         {
             do // do-while-false flat handling construct
             {

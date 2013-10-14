@@ -24,7 +24,7 @@ namespace lambda
 		void Patch(const std::string& strOriginalFile, const std::string& strModifiedFile);
 
 	private:
-		void FileStreamToVector(std::ifstream& fileStream, PBYTEBUF pBuffer);
+		static void FileStreamToVector(std::ifstream& fileStream, PBYTEVECTOR pBuffer);
 
 		ILambdaCodec* m_pCodec;
 		std::string m_strPatchFileName;

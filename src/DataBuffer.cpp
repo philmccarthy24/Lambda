@@ -17,7 +17,7 @@ namespace lambda
         m_nLength = dataBuffer.size();
     }
     
-    CDataBuffer::CDataBuffer(const PBYTE pBuffer, ULONG nBufLen)
+    CDataBuffer::CDataBuffer(PBYTE pBuffer, ULONG nBufLen)
     {
         m_pBuffer = pBuffer;
         m_nLength = nBufLen;

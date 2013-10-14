@@ -19,7 +19,7 @@ namespace lambda
 		CInsertOperation(const CDataBuffer& dataToInsert);
         CInsertOperation();
 
-		virtual void Serialise(const IDataWriter& lambdaWriter);
+		virtual void Serialise(const IDataWriter& lambdaWriter) const;
 		static std::unique_ptr<CInsertOperation> TryDeserialise(IDataReader& lambdaReader);
 		
 		virtual ULONG ObjectSize() const;
@@ -32,7 +32,7 @@ namespace lambda
         void Reset();
 
 	private:
-        ULONG GetHdrSize() const;
+        static ULONG GetHdrSize();
         
 		static const BYTE INSERT_OPERATION_TYPE;
 

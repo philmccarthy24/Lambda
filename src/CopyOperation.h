@@ -18,13 +18,13 @@ namespace lambda
 	public:
 		CCopyOperation(const CDataBuffer& copyFromBuffer, const CDataBuffer& dataToCopy);
 
-		virtual void Serialise(const IDataWriter& lambdaWriter);
+		virtual void Serialise(const IDataWriter& lambdaWriter) const;
 		static std::unique_ptr<CCopyOperation> TryDeserialise(const CDataBuffer& copyFromBuffer, IDataReader& lambdaReader);
         
         virtual ULONG ObjectSize() const;
 		virtual ULONG WriteSize() const;
         
-		virtual void Apply(const IDataWriter& modifiedWriter);
+		virtual void Apply(const IDataWriter& modifiedWriter) const;
 
 	private:
 		CCopyOperation();

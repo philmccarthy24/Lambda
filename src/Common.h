@@ -13,6 +13,8 @@
 #include <iostream>
 #include <sstream>
 
+#define DEBUG_OUTPUT
+
 namespace lambda
 {
 
@@ -75,6 +77,16 @@ namespace lambda
     {
     public:
         SerialisationException(const std::string& strCause, const std::string& strFile, const int nLineNum) :
+        LambdaBaseException(strCause, strFile, nLineNum)
+        {
+        }
+        
+    };
+    
+    class FileIOException : public LambdaBaseException
+    {
+    public:
+        FileIOException(const std::string& strCause, const std::string& strFile, const int nLineNum) :
         LambdaBaseException(strCause, strFile, nLineNum)
         {
         }

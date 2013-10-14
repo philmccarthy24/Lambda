@@ -20,8 +20,8 @@ namespace lambda
 	{
 	public:
 		// Operations on buffers
-		virtual const CDataBuffer EncodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& modifiedBuffer);
-		virtual const CDataBuffer DecodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& lambdaBuffer);
+		virtual CDataBuffer EncodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& modifiedBuffer);
+		virtual CDataBuffer DecodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& lambdaBuffer);
         
 	private:
         static CDataBuffer FindLongestMatch(const CDataBuffer& sourceBuffer, const CDataBuffer& patternBuffer);

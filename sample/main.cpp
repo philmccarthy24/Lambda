@@ -7,10 +7,12 @@
 //
 
 #include <iostream>
-#include "MLZ02Codec.h"
+#include "MLZ03Codec.h"
 #include "PatchFile.h"
 #include "Common.h"
 #include "tclap/CmdLine.h"   // for the tclap library
+
+using namespace lambda;
 
 // Command line arguments can be:
 // lambda -c -i infile -m modifiedfile -p patchfile
@@ -42,8 +44,8 @@ int main(int argc, const char* argv[])
         std::string strPatchFile = patchfileArg.getValue();
         
         // set up a patch file object
-        lambda::CMLZ02Codec bufferEncoder;
-        lambda::CPatchFile patchFile(strPatchFile, &bufferEncoder);
+        CMLZ03Codec bufferEncoder;
+        CPatchFile patchFile(strPatchFile, &bufferEncoder);
         
         // Check what mode we're in
         if (createPatchSwitch.isSet())

@@ -32,7 +32,7 @@ namespace lambda
         /// \param [out] IDataWriter* pLambdaBuffer - the data writer object to use
         ///                                             for serialisation
         ///////////////////////////////////////////////////////////////////////////////
-		virtual void Serialise(const IDataWriter& lambdaWriter) = 0;
+		virtual void Serialise(const IDataWriter& lambdaWriter) const = 0;
         
         ///////////////////////////////////////////////////////////////////////////////
         /// Gets the lambda-serialised size

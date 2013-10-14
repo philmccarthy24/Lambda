@@ -27,6 +27,7 @@ namespace lambda
         virtual ULONG PeekULONG() const = 0;
         virtual ULONG ReadULONG() = 0;
         virtual CDataBuffer ReadData(ULONG nNumBytes) = 0;
+        virtual ULONG BytesToRead() const = 0;
     };
     
     // generic data writer
@@ -77,6 +78,11 @@ namespace lambda
             CDataBuffer readData = m_dataBuffer.GetSection(m_nReadPos, nNumBytes);
             m_nReadPos += nNumBytes;
             return readData;
+        }
+        
+        virtual ULONG BytesToRead() const
+        {
+            return m_dataBuffer.Size() - m_nReadPos;
         }
         
     private:

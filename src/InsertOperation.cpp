@@ -39,7 +39,7 @@ namespace lambda
     ///
     /// \param [out] PBYTEBUF pLambdaBuffer - the buffer to serialise to
     ///////////////////////////////////////////////////////////////////////////////
-    void CInsertOperation::Serialise(const IDataWriter& lambdaWriter)
+    void CInsertOperation::Serialise(const IDataWriter& lambdaWriter) const
     {
         if (!m_DataToInsert.empty())
         {
@@ -50,7 +50,8 @@ namespace lambda
             lambdaWriter.WriteULONG(m_DataToInsert.size());
             
             // then output data
-            lambdaWriter.WriteData(m_DataToInsert);
+            const CDataBuffer lambdaBuf(const_cast<const PBYTE>(m_DataToInsert.data()), m_DataToInsert.size());
+            lambdaWriter.WriteData(lambdaBuf);
         }
     }
 
@@ -81,6 +82,10 @@ namespace lambda
                 lambdaReader.ReadData(nNumBytesToInsert)
             )
         );
+        
+#ifdef DEBUG_OUTPUT
+        std::cout << "<InsertOp><Length>" << nNumBytesToInsert << "</Length></InsertOp>" << std::endl;
+#endif
         
         return pInserOp;
     }
@@ -114,8 +119,8 @@ namespace lambda
     ///////////////////////////////////////////////////////////////////////////////
     void CInsertOperation::Apply(const IDataWriter& outputWriter) const
     {
-        //const CDataBuffer insertWriteBuf(m_DataToInsert.data(), m_DataToInsert.size());
-        outputWriter.WriteData(m_DataToInsert);
+        const CDataBuffer insertWriteBuf(const_cast<const PBYTE>(m_DataToInsert.data()), m_DataToInsert.size());
+        outputWriter.WriteData(insertWriteBuf);
     }
     
     ///////////////////////////////////////////////////////////////////////////////
@@ -123,7 +128,7 @@ namespace lambda
     ///
     /// \return ULONG - header size
     ///////////////////////////////////////////////////////////////////////////////
-    ULONG CInsertOperation::GetHdrSize() const
+    ULONG CInsertOperation::GetHdrSize()
     {
         return sizeof(BYTE) + sizeof(ULONG);
     }

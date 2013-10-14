@@ -17,7 +17,7 @@ namespace lambda
     {
     public:
         CDataBuffer(BYTEVECTOR& dataBuffer);
-        CDataBuffer(const PBYTE pBuffer, ULONG nBufLen);
+        CDataBuffer(PBYTE pBuffer, ULONG nBufLen);
         CDataBuffer(const CDataBuffer& other);
         CDataBuffer();
         

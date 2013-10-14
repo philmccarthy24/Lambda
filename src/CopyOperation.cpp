@@ -29,7 +29,7 @@ namespace lambda
     ///
     /// \param [out] PBYTEBUF pLambdaBuffer - the buffer to serialise to
     ///////////////////////////////////////////////////////////////////////////////
-    void CCopyOperation::Serialise(const IDataWriter& lambdaWriter)
+    void CCopyOperation::Serialise(const IDataWriter& lambdaWriter) const
     {
         // first output the type. We can hone this to be a bit.
         lambdaWriter.WriteByte(COPY_OPERATION_TYPE);
@@ -72,6 +72,10 @@ namespace lambda
                 CDataBuffer(copyFromBuffer.Buffer() + nOffset, nNumBytesToCopy)
             )
         );
+        
+#ifdef DEBUG_OUTPUT
+        std::cout << "<CopyOp><Offset>" << nOffset << "</Offset><Length>" << nNumBytesToCopy << "</Length></CopyOp>" << std::endl;
+#endif
         return pCopyOp;
     }
     
@@ -102,7 +106,7 @@ namespace lambda
     /// \param [in] const BYTEVECTOR& originalBuffer - the buffer to copy from
     /// \param [out] PBYTEBUF pOutputBuffer 0 the buffer to copy to
     ///////////////////////////////////////////////////////////////////////////////
-    void CCopyOperation::Apply(const IDataWriter& outputWriter)
+    void CCopyOperation::Apply(const IDataWriter& outputWriter) const
     {
         outputWriter.WriteData(m_dataToCopy);
     }
