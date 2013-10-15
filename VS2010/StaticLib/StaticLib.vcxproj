@@ -13,16 +13,19 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\Common.h" />
     <ClInclude Include="..\..\src\CopyOperation.h" />
+    <ClInclude Include="..\..\src\DataBuffer.h" />
     <ClInclude Include="..\..\src\InsertOperation.h" />
     <ClInclude Include="..\..\src\LambdaCodec.h" />
+    <ClInclude Include="..\..\src\LambdaIO.h" />
     <ClInclude Include="..\..\src\LambdaOperation.h" />
-    <ClInclude Include="..\..\src\MLZ02Codec.h" />
+    <ClInclude Include="..\..\src\MLZ03Codec.h" />
     <ClInclude Include="..\..\src\PatchFile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\CopyOperation.cpp" />
+    <ClCompile Include="..\..\src\DataBuffer.cpp" />
     <ClCompile Include="..\..\src\InsertOperation.cpp" />
-    <ClCompile Include="..\..\src\MLZ02Codec.cpp" />
+    <ClCompile Include="..\..\src\MLZ03Codec.cpp" />
     <ClCompile Include="..\..\src\PatchFile.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
