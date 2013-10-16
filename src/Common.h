@@ -34,7 +34,7 @@ namespace lambda
             m_strCause = strCause;
             
             std::stringstream ss;
-            ss << strFile << " : " << nLineNum;
+            ss << strFile << ": " << nLineNum;
             m_strLocation = ss.str();
             
             ss.clear();
@@ -42,9 +42,9 @@ namespace lambda
             m_strTimestamp = ss.str();
         }
         
-        const std::string& GetCause()
+        virtual const char* what() const throw()
         {
-            return m_strCause;
+            return m_strCause.c_str();
         }
         
         const std::string& GetLocation()
@@ -58,6 +58,7 @@ namespace lambda
         }
         
     private:
+        
         std::string m_strCause;
         std::string m_strLocation;
         std::string m_strTimestamp;

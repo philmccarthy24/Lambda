@@ -86,6 +86,7 @@ namespace lambda
         {
             THROW_EXCEPTION(InvalidParamException, "Specified buffer has a different length");
         }
-        return memcmp(m_pBuffer, dataBuffer.Buffer(), m_nLength) == 0;
+        int nRet = memcmp(m_pBuffer, dataBuffer.Buffer(), m_nLength);
+        return nRet == 0;
     }
 };
