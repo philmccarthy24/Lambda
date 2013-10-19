@@ -37,9 +37,9 @@ namespace lambda
             ss << strFile << ": " << nLineNum;
             m_strLocation = ss.str();
             
-            ss.clear();
-            ss << __DATE__ << " : " << __TIME__;
-            m_strTimestamp = ss.str();
+            std::stringstream tsss;
+            tsss << __DATE__ << " : " << __TIME__;
+            m_strTimestamp = tsss.str();
         }
         
         virtual const char* what() const throw()
@@ -47,12 +47,12 @@ namespace lambda
             return m_strCause.c_str();
         }
         
-        const std::string& GetLocation()
+        virtual const std::string& GetLocation() const throw()
         {
             return m_strLocation;
         }
         
-        const std::string GetTimestamp()
+        virtual const std::string GetTimestamp() const throw()
         {
             return m_strTimestamp;
         }

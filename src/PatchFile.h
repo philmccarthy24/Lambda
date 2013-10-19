@@ -18,16 +18,18 @@ namespace lambda
 	{
 	public:
 		CPatchFile(const std::string& strPatchFile, ILambdaCodec* pCodec);
-		virtual ~CPatchFile(void);
 
 		void Create(const std::string& strOriginalFile, const std::string& strModifiedFile);
 		void Patch(const std::string& strOriginalFile, const std::string& strModifiedFile);
 
 	private:
 		static void FileStreamToVector(std::ifstream& fileStream, PBYTEVECTOR pBuffer);
+        
 
 		ILambdaCodec* m_pCodec;
 		std::string m_strPatchFileName;
+        
+        static const int SIZE_OF_SHA1;
 	};
 };
 

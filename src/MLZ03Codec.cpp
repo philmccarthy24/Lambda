@@ -98,7 +98,10 @@ namespace lambda
     
     ///////////////////////////////////////////////////////////////////////////////
     /// Find a sub-buffer in patternBuffer which is the longest match for
-    /// sourceBuffer[0..n]
+    /// sourceBuffer[0..n].
+    /// If matching bytes between buffers are above a threshold, switch from linear
+    /// comparison to binary-search-based compare to find longest match with log n
+    /// efficiency
     ///
     /// \param [in] const CDataBuffer& sourceBuffer - the source (updated) buffer
     /// \param [out] const CDataBuffer& patternBuffer - the pattern (original) buffer
@@ -114,6 +117,17 @@ namespace lambda
         ULONG nTryMatchLen = 1;
         CDataBuffer longestPattern;
         
+        // do an initial compare to see if we should do a quickmatch
+        ULONG nMinBufSz = sourceBuffer.Size() < patternBuffer.Size() ? sourceBuffer.Size() : patternBuffer.Size();
+        ULONG nQMThreshold = nMinBufSz < LARGE_MATCH_THRESHOLD ? nMinBufSz : LARGE_MATCH_THRESHOLD;
+        if (sourceBuffer.GetSection(0, nQMThreshold).IsEqualBytes(
+            patternBuffer.GetSection(0, nQMThreshold)))
+        {
+            // quickmatch
+            longestPattern = QuickMatch(sourceBuffer, patternBuffer);
+            nPatternPos = longestPattern.Size();
+        }
+        
         while (nPatternPos + nTryMatchLen <= patternBuffer.Size() &&
                nTryMatchLen <= sourceBuffer.Size()) // if not, longestPattern matches the entirety of sourceBuffer
         {
@@ -121,26 +135,27 @@ namespace lambda
             CDataBuffer matchPattern = patternBuffer.GetSection(nPatternPos, nTryMatchLen);
             if (tryPattern.IsEqualBytes(matchPattern))
             {
-                if (longestPattern.IsEmpty())
-                {
-                    longestPattern = matchPattern;
-                }
-                else if (longestPattern.Size() < matchPattern.Size())
-                {
-                    longestPattern = matchPattern;
-                }
-                
-                if (nTryMatchLen > LARGE_MATCH_THRESHOLD)
+                if (nTryMatchLen >= nQMThreshold)
                 {
                     CDataBuffer quickMatch = QuickMatch(sourceBuffer, patternBuffer.GetSection(nPatternPos));
                     if (quickMatch.Size() > longestPattern.Size())
                     {
                         longestPattern = quickMatch;
                     }
-                    nTryMatchLen += quickMatch.Size() - LARGE_MATCH_THRESHOLD;  // not right
+                    nPatternPos += quickMatch.Size();
+                    nTryMatchLen = 1;
                 }
                 else
                 {
+                    if (longestPattern.IsEmpty())
+                    {
+                        longestPattern = matchPattern;
+                    }
+                    else if (longestPattern.Size() < matchPattern.Size())
+                    {
+                        longestPattern = matchPattern;
+                    }
+                    
                     nTryMatchLen++;
                 }
                 
@@ -165,7 +180,8 @@ namespace lambda
     
     ///////////////////////////////////////////////////////////////////////////////
     /// Find the largest number of matching bytes of sourceBuffer in
-    /// patternBuffer
+    /// patternBuffer.
+    /// Uses an iterative binary search algorithm with memcmps
     ///
     /// \param [in] const CDataBuffer& sourceBuffer
     /// \param [out] const CDataBuffer& patternBuffer
@@ -179,17 +195,20 @@ namespace lambda
         
         ULONG nMaxBytesMatchable = sourceBuffer.Size() < patternBuffer.Size() ? sourceBuffer.Size() : patternBuffer.Size();
         
-        CDataBuffer tryMatch;
+        CDataBuffer bestMatch;
         ULONG nLastMatchLen = 0;
         ULONG nLastFailLen = nMaxBytesMatchable;
         ULONG nMatchAttemptLen = nMaxBytesMatchable;
         
-        while (nMatchAttemptLen - nLastMatchLen > 1)  // not right
+        while (nLastMatchLen < nLastFailLen - 1)
         {
-            tryMatch = sourceBuffer.GetSection(0, nMatchAttemptLen);
-            if (tryMatch.IsEqualBytes(patternBuffer.GetSection(0, nMatchAttemptLen)))
+            CDataBuffer tryMatch = patternBuffer.GetSection(0, nMatchAttemptLen);
+            if (tryMatch.IsEqualBytes(sourceBuffer.GetSection(0, nMatchAttemptLen)))
             {
-                // we've matched. try to go higher
+                // we've matched.
+                bestMatch = tryMatch;
+                
+                // try to go higher
                 nLastMatchLen = nMatchAttemptLen;
                 nMatchAttemptLen += (nLastFailLen - nMatchAttemptLen) / 2;
                 
@@ -200,7 +219,7 @@ namespace lambda
             }
         }
         
-        return tryMatch;
+        return bestMatch;
     }
     
     ///////////////////////////////////////////////////////////////////////////////

@@ -21,6 +21,8 @@
 		4A310E9817FB53460017CF6A /* PatchFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A310E8D17FB53460017CF6A /* PatchFile.cpp */; };
 		4A310E9917FB53460017CF6A /* PatchFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A310E8E17FB53460017CF6A /* PatchFile.h */; };
 		4AF162EF1809B75B00BB0D5A /* LambdaIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AF162EE1809B75B00BB0D5A /* LambdaIO.h */; };
+		4AF20B2F18116D13004D9601 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF20B2D18116D13004D9601 /* sha1.cpp */; };
+		4AF20B3018116D13004D9601 /* sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AF20B2E18116D13004D9601 /* sha1.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		4A310E8D17FB53460017CF6A /* PatchFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PatchFile.cpp; path = ../src/PatchFile.cpp; sourceTree = SOURCE_ROOT; };
 		4A310E8E17FB53460017CF6A /* PatchFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatchFile.h; path = ../src/PatchFile.h; sourceTree = SOURCE_ROOT; };
 		4AF162EE1809B75B00BB0D5A /* LambdaIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LambdaIO.h; path = ../src/LambdaIO.h; sourceTree = "<group>"; };
+		4AF20B2D18116D13004D9601 /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sha1.cpp; path = ../lib/sha1/sha1.cpp; sourceTree = "<group>"; };
+		4AF20B2E18116D13004D9601 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha1.h; path = ../lib/sha1/sha1.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 		4A310E7417FB53320017CF6A = {
 			isa = PBXGroup;
 			children = (
+				4AF20B2D18116D13004D9601 /* sha1.cpp */,
+				4AF20B2E18116D13004D9601 /* sha1.h */,
 				4AF162EE1809B75B00BB0D5A /* LambdaIO.h */,
 				4A2E6E3318071A5400B28BB4 /* DataBuffer.cpp */,
 				4A2E6E3418071A5400B28BB4 /* DataBuffer.h */,
@@ -93,6 +99,7 @@
 				4AF162EF1809B75B00BB0D5A /* LambdaIO.h in Headers */,
 				4A310E9917FB53460017CF6A /* PatchFile.h in Headers */,
 				4A310E8F17FB53460017CF6A /* Common.h in Headers */,
+				4AF20B3018116D13004D9601 /* sha1.h in Headers */,
 				4A2E6E3618071A5400B28BB4 /* DataBuffer.h in Headers */,
 				4A1321EC18001CBC00139B8F /* MLZ03Codec.h in Headers */,
 				4A310E9417FB53460017CF6A /* LambdaCodec.h in Headers */,
@@ -153,6 +160,7 @@
 			files = (
 				4A1321EB18001CBC00139B8F /* MLZ03Codec.cpp in Sources */,
 				4A310E9217FB53460017CF6A /* InsertOperation.cpp in Sources */,
+				4AF20B2F18116D13004D9601 /* sha1.cpp in Sources */,
 				4A310E9817FB53460017CF6A /* PatchFile.cpp in Sources */,
 				4A310E9017FB53460017CF6A /* CopyOperation.cpp in Sources */,
 				4A2E6E3518071A5400B28BB4 /* DataBuffer.cpp in Sources */,

@@ -60,12 +60,14 @@ int main(int argc, const char* argv[])
         }
         
 	}
-    catch (TCLAP::ArgException &e)  // catch any exceptions
+    catch (const TCLAP::ArgException &e)  // catch any exceptions
 	{
         std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
     }
-    // catch lambda:: exceptions here
-	
+    catch (const LambdaBaseException& le)
+    {
+        std::cerr << "error: " << le.what() << " at location " << le.GetLocation() << " (" << le.GetTimestamp() << ")" << std::endl;
+    }
     
     return 0;
 }
