@@ -22,8 +22,8 @@ namespace lambda
     /// \param [out] ILambdaCodec* pCodec - delta codec to use
     ///////////////////////////////////////////////////////////////////////////////
     CPatchFile::CPatchFile(const std::string& strPatchFile, ILambdaCodec* pCodec) :
-    m_strPatchFileName(strPatchFile),
-    m_pCodec(pCodec)
+	m_pCodec(pCodec),
+    	m_strPatchFileName(strPatchFile)
     {
     }
 

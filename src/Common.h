@@ -9,9 +9,10 @@
 #define _COMMON_STUFF_H_
 
 #include <vector>
-#include <string>
+#include <cstring>
 #include <iostream>
 #include <sstream>
+#include <memory>
 
 #define DEBUG_OUTPUT
 

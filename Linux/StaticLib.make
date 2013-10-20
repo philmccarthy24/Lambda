@@ -2,18 +2,18 @@
 #
 #----------------------------------------------------------------------- 
 #
-# This is the lambda makefile. It builds and installs lambda as a
+# This is the lambda makefile. It builds lambda as a
 # static library. See the documentation for more information.
 #
-# Type 'make' to build the lib.
-# Type 'make install' to build and install the lib.
-# Type 'make clean' to clean the object files
+# Type 'make -f StaticLib.make' to build the lib.
+# Type 'make -f StaticLib.make install' to build and install the lib.
+# Type 'make -f StaticLib.make clean' to clean the object files
 #
 # Note for FreeBSD users:
 # use gmake from "/usr/ports/devel/gmake"
 #
 # Phil McCarthy
-# Wednesday 02 Oct 2013
+# 20 Oct 2013
 #
 #----------------------------------------------------------------------- 
 # Edit the following lines to meet your needs
@@ -28,7 +28,10 @@ LIB_PATH = /usr/local/lib/
 COMPILER = g++
 
 # Global options for the compiler
-COPTIONS = -ansi -Wall -Wextra
+COPTIONS = -ansi -Wall -Wextra -std=c++11
+
+# include paths
+INC = -I../src -I../lib/sha1
 
 #----------------------------------------------------------------------- 
 # DON'T CHANGE ANYTHING BELOW
@@ -40,75 +43,76 @@ else
 	COPTIONS += -O3 -fomit-frame-pointer
 endif
 
-GCC = $(COMPILER) $(COPTIONS)
+GCC = $(COMPILER) $(COPTIONS) $(INC)
 
 #----------------------------------------------------------------------- 
 #Main-Target
-all:		LAMBDAOPS CODEC PATCHFILE LIB
+all:		SHA1 LAMBDACORE LIB
 
 #----------------------------------------------------------------------- 
 #all header-files
 
 		
 HEADER = 	../src/Common.h \
-		../src/CopyOperation.h \
-		../src/InsertOperation.h \
-		../src/LambdaEncoder.h \
-		../src/LambdaOperation.h \
-		../src/MLZ01Encoder.h
+		../src/DataBuffer.h \
+		../src/LambdaCodec.h \
+		../src/MLZ03Codec.h \
+		../src/PatchFile.h
 
 #----------------------------------------------------------------------- 
-# LAMBDAOPS Targets
+# LAMBDACORE Targets
 
-LAMBDAOPS = 	copyop.o \
-				insertop.o
+LAMBDACORE = 	CopyOperation.o \
+		InsertOperation.o \
+		DataBuffer.o \
+		MLZ03Codec.o \
+		PatchFile.o
 
-LAMBDAOPS:		copyop.o insertop.o
+LAMBDACORE:	CopyOperation.o InsertOperation.o DataBuffer.o MLZ03Codec.o PatchFile.o
 
-copyop.o:	../src/CopyOperation.cpp ../src/CopyOperation.h
+CopyOperation.o:   ../src/CopyOperation.cpp ../src/CopyOperation.h
 			$(GCC) -c ../src/CopyOperation.cpp
 			
-insertop.o: ../src/InsertOperation.cpp ../src/InsertOperation.h
+InsertOperation.o: ../src/InsertOperation.cpp ../src/InsertOperation.h
 			$(GCC) -c ../src/InsertOperation.cpp
+
+DataBuffer.o:	   ../src/DataBuffer.cpp ../src/DataBuffer.h
+			$(GCC) -c ../src/DataBuffer.cpp
+
+MLZ03Codec.o:      ../src/MLZ03Codec.cpp ../src/MLZ03Codec.h ../src/LambdaIO.h
+			$(GCC) -c ../src/MLZ03Codec.cpp
+
+PatchFile.o:	   ../src/PatchFile.cpp ../lib/sha1/sha1.h
+			$(GCC) -c ../src/PatchFile.cpp
 		
 #----------------------------------------------------------------------- 
-# CODEC Target
+# SHA1 Target
 
-CODEC = 	codec.o
+SHA1 = 		sha1.o
 
-CODEC:		codec.o
+SHA1:		sha1.o
 
-codec.o:	../src/MLZ01Encoder.cpp ../src/MLZ01Encoder.h
-		$(GCC) -c ../src/MLZ01Encoder.cpp
-
-#----------------------------------------------------------------------- 
-# PATCHFILE Target
-
-PATCHFILE = 	patchfile.o
-
-PATCHFILE:		patchfile.o
-
-patchfile.o:	../src/PatchFile.cpp ../src/PatchFile.h
-		$(GCC) -c ../src/PatchFile.cpp
+sha1.o:		../lib/sha1/sha1.cpp ../lib/sha1/sha1.h
+			$(GCC) -c ../lib/sha1/sha1.cpp
 
 #----------------------------------------------------------------------- 
 # Creating a static lib using ar
 
-LIB:		LAMBDAOPS CODEC PATCHFILE			
-		ar rs libhl++.a $(LAMBDAOPS) $(CODEC) $(PATCHFILE)
+LIB:		SHA1 LAMBDACORE		
+		ar rs liblambda.a $(SHA) $(LAMBDACORE)
 
 #----------------------------------------------------------------------- 
 #Installing the lib
 install:	all 
 		mkdir -p $(INCLUDE_PATH); \
 		mkdir -p $(LIB_PATH); \
-		cp libhl++.a $(LIB_PATH) && \
+		cp liblambda.a $(LIB_PATH) && \
 		cp $(HEADER) $(INCLUDE_PATH)
 		-@ echo ""
 		-@ echo ""
 		-@ echo "------------------------------"
 		-@ echo ""
-		-@ echo "hashlib++ has been installed to:"
+		-@ echo "Lambda has been installed to:"
 		-@ echo "include files: $(INCLUDE_PATH)"
 		-@ echo "library files: $(LIB_PATH)"
 		-@ echo ""
