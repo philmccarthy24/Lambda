@@ -2,11 +2,11 @@
 #
 #----------------------------------------------------------------------- 
 #
-# This is the lambda (sample) application makefile.
+# This is a makefile to build the unit test harness for the lambda library.
 # See the documentation for more information.
 #
-# Type 'make -f Lambda.make' to build the lib.
-# Type 'make -f Lambda.make clean' to clean the object files
+# Type 'make -f LambdaTest.make' to build the lib.
+# Type 'make -f LambdaTest.make clean' to clean the object files
 #
 # Note for FreeBSD users:
 # use gmake from "/usr/ports/devel/gmake"
@@ -24,7 +24,7 @@ COMPILER = g++
 COPTIONS = -ansi -Wall -Wextra -std=c++11
 
 # include paths
-INC = -I../lib -I../src
+INC = -I../lib -I../src -I../lib/catch -I../test
 LIB = -L. -Lbuild
 
 #----------------------------------------------------------------------- 
@@ -45,7 +45,7 @@ HEADER = 	../src/Common.h \
 		../src/MLZ03Codec.h \
 		../src/PatchFile.h
 
-OUTPUT =	build/lambda
+OUTPUT = 	build/lambdatests
 
 LIBRARIES = 	lambda
 
@@ -56,19 +56,20 @@ all:		BUILD
 #----------------------------------------------------------------------- 
 # APP Targets
 
-APP = 	main.o
+APP = 	LambdaTests.o
 
-APP:	main.o
+APP:	LambdaTests.o
 
-main.o:   ../sample/main.cpp
-		$(GCC) -c ../sample/main.cpp
+LambdaTests.o:   ../test/LambdaTests.cpp
+		$(GCC) -c ../test/LambdaTests.cpp
 
 #----------------------------------------------------------------------- 
-# Link the obj and liblambda.a static library to create the sample app
+# Link the obj and static lib to create the sample app
 
 BUILD:	APP		
-	$(GCC) main.o -l $(LIBRARIES) -o $(OUTPUT)
+	$(GCC) LambdaTests.o -l $(LIBRARIES) -o $(OUTPUT)
 
+#-Wl,-Bdynamic
 #----------------------------------------------------------------------- 
 # Cleaning object-files
 

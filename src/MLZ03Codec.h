@@ -19,6 +19,9 @@ namespace lambda
 	class CMLZ03Codec : public ILambdaCodec
 	{
 	public:
+		CMLZ03Codec() {};
+		virtual ~CMLZ03Codec() {};
+
 		// Operations on buffers
 		virtual CDataBuffer EncodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& modifiedBuffer);
 		virtual CDataBuffer DecodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& lambdaBuffer);

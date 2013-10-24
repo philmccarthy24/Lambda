@@ -16,6 +16,9 @@ namespace lambda
 	class ILambdaCodec
 	{
 	public:
+		ILambdaCodec() {};
+		virtual ~ILambdaCodec() {};
+
 		virtual CDataBuffer EncodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& modifiedBuffer) = 0;
 		virtual CDataBuffer DecodeBuffer(const CDataBuffer& originalBuffer, const CDataBuffer& lambdaBuffer) = 0;
 	};
