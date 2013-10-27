@@ -14,8 +14,6 @@
 #include <sstream>
 #include <memory>
 
-#define DEBUG_OUTPUT
-
 namespace lambda
 {
 
